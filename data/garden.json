@@ -9,7 +9,7 @@
   "depositPerTable": [300,500],
   "menuVersion": "d10c306c",
   "menu": [
-    {"id": "G01", "th": "เมนูแนะนำ", "en": "Recommended", "items": [
+    {"id": "G01", "type": "food", "th": "เมนูแนะนำ", "en": "Recommended", "items": [
       ["G01-01","บรูสเชตต้าสลัด","Bruschetta Salad","",290],
       ["G01-02","กุ้งแม่น้ำยักษ์เผา (ซอสไข่เค็ม)","Giant river prawn (grilled) - Salted egg sauce","",890],
       ["G01-03","กุ้งแม่น้ำยักษ์เผา (ซอสพริกเกลือ)","Giant river prawn (grilled) - Chili-salt sauce","",890],
@@ -33,7 +33,7 @@
       ["G01-21","ตำกุ้งสดไหลบัวแสนปิติ ปลาร้า","Lotus root spicy salad with prawns - With pla ra (fermented fish)","",190],
       ["G01-22","ตำกุ้งสดไหลบัวแสนปิติ ไม่ปลาร้า","Lotus root spicy salad with prawns - Without pla ra","",190]
     ]},
-    {"id": "G02", "th": "เมนูทานเล่น", "en": "Appetizer", "items": [
+    {"id": "G02", "type": "food", "th": "เมนูทานเล่น", "en": "Appetizer", "items": [
       ["G02-01","คางกุ้งแซ่บ","Fried shrimp chin with Thai herbs","",89],
       ["G02-02","เฟรนฟรายส์","French fries","",89],
       ["G02-03","เอบิโรล ขลุ่ยกุ้ง","Ebi rolls","",119],
@@ -43,7 +43,7 @@
       ["G02-07","คารามารี่ (ปลาหมึก)","Deep-fried calamari rings","",189],
       ["G02-08","ฟิชแอนด์ชิปส์","Fish and chips","",350]
     ]},
-    {"id": "G03", "th": "เมนูสลัด", "en": "Salad", "items": [
+    {"id": "G03", "type": "food", "th": "เมนูสลัด", "en": "Salad", "items": [
       ["G03-01","บูราต้าสลัด","Burrata tomato salad","",259],
       ["G03-02","ซีซ่าสลัด เบค่อน","Caesar salad with bacon","",259],
       ["G03-03","สลัดเห็ดย่าง","Grilled mushroom salad","",229],
@@ -51,14 +51,14 @@
       ["G03-05","การ์เด้นสลัด","Garden salad","",219],
       ["G03-06","มานาการ์เด้นสลัด","Mana Garden salad","",359]
     ]},
-    {"id": "G04", "th": "เมนูสเต็ก", "en": "Steak", "items": [
+    {"id": "G04", "type": "food", "th": "เมนูสเต็ก", "en": "Steak", "items": [
       ["G04-01","น่องเป็ดกงฟีต์","Duck leg confit","",350],
       ["G04-02","สเต็กสันคอหมูคุโรบูตะ","Kurobuta pork steak","",295],
       ["G04-03","สเต็กแซลมอน","Salmon steak","",650],
       ["G04-04","สเต็กเนื้อวากิวออสเตรเลีย","Australian wagyu steak","",1500],
       ["G04-05","สเต็กแกะ","Lamb rack steak","",1490]
     ]},
-    {"id": "G05", "th": "เมนูทอด", "en": "Fried", "items": [
+    {"id": "G05", "type": "food", "th": "เมนูทอด", "en": "Fried", "items": [
       ["G05-01","กุ้งแม่น้ำทอดเกลือ","Deep-fried river prawn with Thai herb sauce","",390],
       ["G05-02","ปลากะพงทอดน้ำปลา","Deep-fried sea bass with fish sauce","",420],
       ["G05-03","ปลากะพงลุยสวน","Deep-fried sea bass with spicy salad","",420],
@@ -72,14 +72,14 @@
       ["G05-11","ปูนิ่มทอดกระเทียม","Deep-fried soft shell crab with garlic","",360],
       ["G05-12","ปูนิ่มคั่วพริกเกลือ","Deep-fried soft shell crab with chili and salt","",360]
     ]},
-    {"id": "G06", "th": "เมนูผัด", "en": "Stir Fry", "items": [
+    {"id": "G06", "type": "food", "th": "เมนูผัด", "en": "Stir Fry", "items": [
       ["G06-01","หน่อไม้ฝรั่งผัดกุ้ง","Stir-fried asparagus and prawn in oyster sauce","",220],
       ["G06-02","เนื้อปูผัดผงกะหรี่","Stir-fried lump crab meat with curry powder sauce","",480],
       ["G06-03","ผัดพริกแกงหมูกรอบ","Stir-fried crispy pork with spicy red curry paste","",250],
       ["G06-04","เนื้อพิคานย่าออสเตรเลียผัดน้ำมันหอย","Stir-fried Australian picanha beef with oyster sauce","",250],
       ["G06-05","ผัดเผ็ดเนื้อออสเตรเลีย","Stir-fried Australian beef with spicy red curry sauce","",280]
     ]},
-    {"id": "G07", "th": "เมนูอาหารไทย", "en": "Thai Dish", "items": [
+    {"id": "G07", "type": "food", "th": "เมนูอาหารไทย", "en": "Thai Dish", "items": [
       ["G07-01","ผัดไทยกุ้งแม่น้ำ","Pad Thai with river prawns","",390],
       ["G07-02","ผัดไทยกุ้งสด","Pad Thai with prawns","",159],
       ["G07-03","ข้าวแมว","Salmon with rice","",189],
@@ -96,13 +96,13 @@
       ["G07-14","ข้าวผัดกุ้ง","Thai fried rice - Prawn","",129],
       ["G07-15","ข้าวผัดปู","Thai fried rice - Crab","",380]
     ]},
-    {"id": "G08", "th": "เมนูน้ำพริก", "en": "Chilli Sauce", "items": [
+    {"id": "G08", "type": "food", "th": "เมนูน้ำพริก", "en": "Chilli Sauce", "items": [
       ["G08-01","ชุดน้ำพริกกะปิคุณย่า","Thai spicy shrimp paste dipping sauce set (Grandma's recipe)","",180],
       ["G08-02","ชุดน้ำพริกกุ้งสด","Shrimp paste chili sauce set with fresh shrimp","",220],
       ["G08-03","น้ำพริกไข่ปูมัน","Spicy crab roe chili dip","",380],
       ["G08-04","เมี่ยงปลากะพง","Seabass wrap with vegetables and Thai herbs","",470]
     ]},
-    {"id": "G09", "th": "เมนูพิซซ่า", "en": "Pizza", "items": [
+    {"id": "G09", "type": "food", "th": "เมนูพิซซ่า", "en": "Pizza", "items": [
       ["G09-01","เปปเปอโรนี่","Pepperoni","",379],
       ["G09-02","ทรัฟเฟิลและแฮม","Truffle & Ham","",590],
       ["G09-03","แฮมร็อกเก็ตบรูเชสต้า","Ham Rocket Bruschetta","",590],
@@ -114,7 +114,7 @@
       ["G09-09","กุ้งกระเทียม","Garlic Shrimp","",429],
       ["G09-10","มาการิต้า","Margherita","",359]
     ]},
-    {"id": "G10", "th": "เมนูพาสต้า / สปาเกตตี้", "en": "Pasta / Spaghetti", "items": [
+    {"id": "G10", "type": "food", "th": "เมนูพาสต้า / สปาเกตตี้", "en": "Pasta / Spaghetti", "items": [
       ["G10-01","สปาเกตตี้คาโบนาร่า ปู","Spaghetti Carbonara (crab) - Crab","",850],
       ["G10-02","สปาเกตตี้คาโบนาร่า เบคอน","Spaghetti Carbonara (bacon) - Bacon","",289],
       ["G10-03","พาสต้าเพสโต้ไก่","Pesto pasta (chicken) - Chicken","",189],
@@ -125,7 +125,7 @@
       ["G10-08","มักกะโรนีไก่","Stir-fried macaroni with chicken","",149],
       ["G10-09","สปาเกตตี้ผัดพริกแห้งไส้กรอกเยอรมัน","Spaghetti with dry chili and German sausage","",259]
     ]},
-    {"id": "G11", "th": "เมนูกาแฟเย็น", "en": "Ice Coffee", "items": [
+    {"id": "G11", "type": "drink", "th": "เมนูกาแฟเย็น", "en": "Ice Coffee", "items": [
       ["G11-01","อดัม มารอน","Adam Marron","",120],
       ["G11-02","อีวา มารอน","Eva Marron","",120],
       ["G11-03","ม็อคค่า","Mocha","",120],
@@ -134,20 +134,20 @@
       ["G11-06","ลาเต้","Latte","",85],
       ["G11-07","คาปูชิโน่","Cappuccino","",85]
     ]},
-    {"id": "G12", "th": "เมนูซิกเนเจอร์", "en": "Signature Mana", "items": [
+    {"id": "G12", "type": "drink", "th": "เมนูซิกเนเจอร์", "en": "Signature Mana", "items": [
       ["G12-01","ลองแบล็ค","Long Black","",80],
       ["G12-02","อเมริกาโน่ ส้ม","Americano Orange","",120],
       ["G12-03","อเมริกาโน่มะพร้าว","Long Black Coconut","",120],
       ["G12-04","ลองแบล็ค พีช","Long Black Peach","",120],
       ["G12-05","ลองแบล็ค น้ำผึ้ง","Long Black Honey","",120]
     ]},
-    {"id": "G13", "th": "เมนูกาแฟร้อน", "en": "Hot Coffee", "items": [
+    {"id": "G13", "type": "drink", "th": "เมนูกาแฟร้อน", "en": "Hot Coffee", "items": [
       ["G13-01","ลองแบล็ค","Long Black","",75],
       ["G13-02","ลาเต้","Latte","",80],
       ["G13-03","คาปูชิโน่","Cappuccino","",85],
       ["G13-04","ม็อคค่า","Mocha","",85]
     ]},
-    {"id": "G14", "th": "เมนูมัทฉะ", "en": "Matcha", "items": [
+    {"id": "G14", "type": "drink", "th": "เมนูมัทฉะ", "en": "Matcha", "items": [
       ["G14-01","ชาไทย","Milk tea (Thai tea)","",85],
       ["G14-02","มัทฉะโคลโฟม","Matcha cold foam","",120],
       ["G14-03","มัทฉะน้ำส้ม","Blessing from the Heaven (matcha orange)","",120],
@@ -158,7 +158,7 @@
       ["G14-08","มัทฉะ น้ำมะพร้าวสด","Matcha coconut","",120],
       ["G14-09","มัทฉะ ฮันนี่เลม่อน","Matcha Honey Lemon","",120]
     ]},
-    {"id": "G15", "th": "เมนูสมูทตี้", "en": "Mana Smoothies", "items": [
+    {"id": "G15", "type": "drink", "th": "เมนูสมูทตี้", "en": "Mana Smoothies", "items": [
       ["G15-01","ยูนิคอร์น สมูทตี้","Unicorn Smoothie","",149],
       ["G15-02","แคโรทีน สมูทตี้","Carotene Smoothie","",149],
       ["G15-03","มิกซ์เบอร์รี่ สมูทตี้","Mixed Berry Smoothie","",149],
@@ -168,7 +168,7 @@
       ["G15-07","อะโวคาโดโยเกิร์ต สมูทตี้","Earth Smoothie","",149],
       ["G15-08","ฝรั่งบ๊วยชื่นใจ","Guava Plum Smoothie","",149]
     ]},
-    {"id": "G16", "th": "เมนูอิตาเลียนโซดา", "en": "Italian Soda", "items": [
+    {"id": "G16", "type": "drink", "th": "เมนูอิตาเลียนโซดา", "en": "Italian Soda", "items": [
       ["G16-01","นิวแลนด์ อิตาเลียนโซดา สตรอเบอร์รี่","New Land Strawberry Italian Soda","",150],
       ["G16-02","นิวแลนด์ อิตาเลียนโซดา ยูสุ","New Land Yuzu Italian Soda","",150],
       ["G16-03","สตรอเบอร์รี่ โซดา","Strawberry Soda","",85],

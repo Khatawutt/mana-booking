@@ -19,7 +19,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+Thai:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/app.css?v=3">
+<link rel="stylesheet" href="css/app.css?v=4">
 </head>
 <body>
 <div class="top"><div class="top-in">
@@ -115,6 +115,10 @@ if(q==='ratch'||q==='ratchayothin'){var i=document.getElementById('bootLogo');if
       <button type="button" class="fullmenu" id="fullMenu"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z"/><path d="M4 19V5M9 7h6"/></svg>Full Menu</button>
       <hr class="goldline">
     </div>
+    <div class="seg" id="seg" role="tablist" aria-label="อาหาร / เครื่องดื่ม">
+      <button type="button" class="on" id="segFood" data-sec="food" role="tab" aria-selected="true"><span class="sg-ico" aria-hidden="true">&#127869;</span><b>อาหาร</b><small>Food</small><i class="sg-n hide">0</i></button>
+      <button type="button" id="segDrink" data-sec="drink" role="tab" aria-selected="false"><span class="sg-ico" aria-hidden="true">&#129380;</span><b>เครื่องดื่ม</b><small>Drinks</small><i class="sg-n hide">0</i></button>
+    </div>
     <div class="search"><input type="text" id="fSearch" placeholder="ค้นหาเมนู / Search menu..." autocomplete="off" enterkeyhint="search"></div>
     <div class="tabwrap"><div class="tabs" id="tabs"></div><button type="button" class="tabnext" id="tabNext" aria-label="เลื่อนหมวดถัดไป">&rsaquo;</button></div>
     <div id="menu"></div>
@@ -186,7 +190,7 @@ if(q==='ratch'||q==='ratchayothin'){var i=document.getElementById('bootLogo');if
   <div class="sheet-f"><div class="total"><span>รวมทั้งหมด</span><b id="sheetTotal">฿0</b></div><button class="btn gold" id="sheetOk" type="button" style="width:100%;margin-top:10px">ตกลง</button></div>
 </div>
 
-<script src="js/config.js?v=3"></script>
-<script src="js/app.js?v=3"></script>
+<script src="js/config.js?v=4"></script>
+<script src="js/app.js?v=4"></script>
 </body>
 </html>

@@ -75,10 +75,13 @@
     var DOWS = ['อา.', 'จ.', 'อ.', 'พ.', 'พฤ.', 'ศ.', 'ส.'];
     var S = {
       step: 1, iso: B.today, slot: '', zone: B.zones.length === 1 ? B.zones[0].key : '', guests: 2,
-      preorder: null, cart: {}, avail: null, availErr: '', loading: false, qr: '', submitting: false, openCats: {}, q: '', cat: 'all'
+      preorder: null, cart: {}, avail: null, availErr: '', loading: false, qr: '', submitting: false, openCats: {}, q: '', cat: 'all', sec: 'food'
     };
     var ITEMS = {};
     B.menu.forEach(function (c) { c.items.forEach(function (it) { ITEMS[it[0]] = { id: it[0], th: it[1], en: it[2], zh: it[3], price: it[4], cat: c.id }; }); });
+    function secOf(c) { return c.type === 'drink' ? 'drink' : 'food'; }
+    var CATSEC = {}; B.menu.forEach(function (c) { CATSEC[c.id] = secOf(c); });
+    var SECN = { food: 0, drink: 0 }; B.menu.forEach(function (c) { SECN[CATSEC[c.id]] += c.items.length; });
 
     function $(id) { return document.getElementById(id); }
     function esc(s) { return String(s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
@@ -244,10 +247,34 @@
             '<div class="step"><button type="button" data-act="dec" aria-label="ลด">&minus;</button><span class="q">0</span><button type="button" class="p" data-act="inc" aria-label="เพิ่ม">+</button></div></div>' +
             '</div></article>';
         }).join('');
-        return '<section class="cat" data-cat="' + c.id + '"><h3 class="cat-title"><span>' + esc(c.th) + '</span><small>' + esc(c.en) + ' &middot; ' + c.items.length + ' รายการ</small></h3><div class="mgrid">' + cards + '</div></section>';
+        return '<section class="cat" data-sec="' + CATSEC[c.id] + '" data-cat="' + c.id + '"><h3 class="cat-title"><span>' + esc(c.th) + '</span><small>' + esc(c.en) + ' &middot; ' + c.items.length + ' รายการ</small></h3><div class="mgrid">' + cards + '</div></section>';
       }).join('');
       $('menu').innerHTML = h;
-      $('tabs').innerHTML = '<div class="tab on" data-cat="all">ALL<span class="tth"> ทั้งหมด</span></div>' + B.menu.map(function (c) { return '<div class="tab" data-cat="' + c.id + '">' + esc(c.th) + '<i class="hide">0</i></div>'; }).join('');
+      buildTabs();
+    }
+
+    function buildTabs() {
+      var sec = S.sec;
+      $('tabs').innerHTML = '<div class="tab' + (S.cat === 'all' ? ' on' : '') + '" data-cat="all">ALL<span class="tth"> ทั้งหมด</span></div>' + B.menu.filter(function (c) { return CATSEC[c.id] === sec; }).map(function (c) {
+        var n = 0; c.items.forEach(function (x) { n += S.cart[x[0]] || 0; });
+        return '<div class="tab' + (S.cat === c.id ? ' on' : '') + '" data-cat="' + c.id + '">' + esc(c.th) + '<i class="' + (n > 0 ? '' : 'hide') + '">' + n + '</i></div>';
+      }).join('');
+    }
+    function refreshSeg() {
+      var n = { food: 0, drink: 0 };
+      Object.keys(S.cart).forEach(function (id) { if (ITEMS[id]) n[CATSEC[ITEMS[id].cat]] += S.cart[id]; });
+      ['food', 'drink'].forEach(function (k) {
+        var b = $(k === 'food' ? 'segFood' : 'segDrink'), i = b.querySelector('.sg-n');
+        i.textContent = n[k]; i.className = 'sg-n' + (n[k] > 0 ? '' : ' hide');
+        b.classList.toggle('on', S.sec === k); b.setAttribute('aria-selected', S.sec === k ? 'true' : 'false');
+        b.querySelector('small').textContent = (k === 'food' ? 'Food' : 'Drinks') + ' \u00b7 ' + SECN[k];
+      });
+    }
+    function setSection(sec) {
+      if (sec !== 'food' && sec !== 'drink') return;
+      S.sec = sec; S.cat = 'all';
+      if (S.q) { S.q = ''; $('fSearch').value = ''; }
+      buildTabs(); applySearch(); $('tabs').scrollLeft = 0;
     }
 
     function refreshItem(id) {
@@ -264,6 +291,7 @@
       B.menu.forEach(function (c) { if (c.id === it.cat) c.items.forEach(function (x) { n += S.cart[x[0]] || 0; }); });
       var tab = document.querySelector('.tab[data-cat="' + it.cat + '"] i');
       if (tab) { tab.textContent = n; tab.className = n > 0 ? '' : 'hide'; }
+      refreshSeg();
     }
 
     function setQty(id, q) {
@@ -278,8 +306,10 @@
     function applySearch() {
       var q = S.q.trim().toLowerCase(), any = false;
       var sel = q ? 'all' : (S.cat || 'all');
+      var firstSec = null, curHit = false;
       Array.prototype.forEach.call(document.querySelectorAll('.cat'), function (cat) {
-        var vis = 0, inCat = sel === 'all' || cat.getAttribute('data-cat') === sel;
+        var vis = 0, sec = cat.getAttribute('data-sec');
+        var inCat = q ? true : (sec === S.sec && (sel === 'all' || cat.getAttribute('data-cat') === sel));
         Array.prototype.forEach.call(cat.querySelectorAll('.item'), function (row) {
           var it = ITEMS[row.getAttribute('data-id')];
           var hit = !q || (it.th + ' ' + it.en + ' ' + it.zh).toLowerCase().indexOf(q) > -1;
@@ -287,18 +317,26 @@
           if (hit) vis++;
         });
         cat.style.display = (vis && inCat) ? '' : 'none';
-        if (vis && inCat) any = true;
+        if (vis && inCat) { any = true; if (!firstSec) firstSec = sec; if (sec === S.sec) curHit = true; }
       });
+      // search spans both sections: results from food and drinks are shown together;
+      // if only the other section has hits, the toggle follows them
+      if (q && firstSec && !curHit) { S.sec = firstSec; }
+      document.querySelector('.tabwrap').classList.toggle('searching', !!q);
       $('noRes').className = 'empty' + (any ? ' hide' : '');
-      Array.prototype.forEach.call(document.querySelectorAll('.tab'), function (t) { t.classList.toggle('on', t.getAttribute('data-cat') === sel); });
+      if (!q) {
+        Array.prototype.forEach.call(document.querySelectorAll('.tab'), function (t) { t.classList.toggle('on', t.getAttribute('data-cat') === sel); });
+      }
+      refreshSeg();
     }
 
     // category tabs: show one category (or ALL) as a card grid
     function openCat(id, scroll) {
       if (id !== 'all' && !document.querySelector('.cat[data-cat="' + id + '"]')) return;
+      if (id !== 'all' && CATSEC[id] !== S.sec) S.sec = CATSEC[id];
       S.cat = id;
       if (S.q) { S.q = ''; $('fSearch').value = ''; }
-      applySearch();
+      buildTabs(); applySearch();
       var t = document.querySelector('.tab.on');
       if (t && t.scrollIntoView) { var box = $('tabs'); box.scrollLeft = t.offsetLeft - (box.clientWidth - t.offsetWidth) / 2; }
       if (scroll) {
@@ -504,7 +542,8 @@
       $('fGuests').max = B.maxGuests;
       $('modeYes').onclick = function () { S.preorder = true; renderStep2(); renderHeader(); };
       $('modeNo').onclick = function () { S.preorder = false; renderStep2(); renderHeader(); };
-      $('fSearch').oninput = function () { S.q = $('fSearch').value; applySearch(); };
+      $('fSearch').oninput = function () { var had = !!S.q.trim(); S.q = $('fSearch').value; if (had && !S.q.trim()) buildTabs(); applySearch(); };
+      $('seg').onclick = function (e) { var b = e.target.closest('button[data-sec]'); if (b) setSection(b.getAttribute('data-sec')); };
       $('tabs').onclick = function (e) { var t = e.target.closest('.tab'); if (t) openCat(t.getAttribute('data-cat'), true); };
       $('menu').onclick = stepClick;
       $('fullMenu').onclick = function () { openCat('all', true); };
@@ -519,7 +558,7 @@
     }
 
     function init() {
-      renderInfoChips(); renderGuestHint(); buildMenu(); bind();
+      renderInfoChips(); renderGuestHint(); buildMenu(); applySearch(); bind();
       renderStats(); renderHeader(); showStep(1);
       fetchAvail();
     }

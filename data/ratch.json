@@ -9,7 +9,7 @@
   "depositPerTable": [300,500],
   "menuVersion": "1a0f2dee",
   "menu": [
-    {"id": "R01", "th": "เมนูแนะนำ", "en": "Recommendation", "items": [
+    {"id": "R01", "type": "food", "th": "เมนูแนะนำ", "en": "Recommendation", "items": [
       ["R01-01","พิซซ่าบูราต้า พาร์ม่า","Pizza Burrata Parma","布拉塔帕尔马披萨",690],
       ["R01-02","พิซซ่าแซลมอนรมควัน","Pizza Smoked Salmon","烟熏三文鱼披萨",620],
       ["R01-03","พิซซ่าทรัฟเฟิล พาร์ม่า","Pizza Truffle Parma","松露帕尔马披萨",590],
@@ -27,19 +27,19 @@
       ["R01-15","สลัดแซลมอนรมควัน","Smoked Salmon Salad","烟熏三文⻥沙拉",350],
       ["R01-16","หอยเชลล์ มานา","MANA Scallops","扇贝",450]
     ]},
-    {"id": "R02", "th": "อาหารเรียกน้ำย่อย", "en": "Appetizer", "items": [
+    {"id": "R02", "type": "food", "th": "อาหารเรียกน้ำย่อย", "en": "Appetizer", "items": [
       ["R02-01","ปีกไก่ทอด","Chicken Wings","炸鸡翅",160],
       ["R02-02","เฟรนช์ฟรายส์","French Fries","法式薯条",129],
       ["R02-03","หมูสามชั้นทอดน้ำปลา","Crispy Fish Sauce Pork","鱼露脆⽪三层⾁",220],
       ["R02-04","ปอเปี๊ยะหมู","Pork Summer Roll","泰式风⼲炸猪⾁",189],
       ["R02-05","กัวคาโมเล่อะโวคาโด","Avocado Guacamole","牛油果酱",390]
     ]},
-    {"id": "R03", "th": "ของย่าง", "en": "Grilled", "items": [
+    {"id": "R03", "type": "food", "th": "ของย่าง", "en": "Grilled", "items": [
       ["R03-01","หมูคุโรบุตะย่างน้ำจิ้มแจ่ว","Grilled Kurobuta with Jaew","黑豚烤肉配沾酱",195],
       ["R03-02","พิคานย่าย่างน้ำจิ้มแจ่ว","Picanha With Jaew Sauce","皮卡尼亚烤肉配沾酱",280],
       ["R03-03","ไส้กรอกรวม","Mixed Sausages","综合香肠",490]
     ]},
-    {"id": "R04", "th": "พาสต้า", "en": "Pasta", "items": [
+    {"id": "R04", "type": "food", "th": "พาสต้า", "en": "Pasta", "items": [
       ["R04-01","มักกะโรนีกุ้ง","Shrimp Macaroni","虾仁通心粉",189],
       ["R04-02","มักกะโรนีไก่","Chicken Macaroni","鸡肉通⼼粉",159],
       ["R04-03","สปาเกตตี้ขี้เมาทะเล","Spicy Drunken Seafood Spaghetti","醉海鲜意面",420],
@@ -49,7 +49,7 @@
       ["R04-07","สปาเกตตี้เพสโต้แซลมอน","Salmon Pesto Spaghetti","三文⻥⻘酱意⾯",420],
       ["R04-08","สปาเกตตี้เพสโต้หอยเชลล์","Scallop Pesto Spaghetti","扇贝⻘酱意⾯",590]
     ]},
-    {"id": "R05", "th": "พิซซ่า", "en": "Pizza", "items": [
+    {"id": "R05", "type": "food", "th": "พิซซ่า", "en": "Pizza", "items": [
       ["R05-01","พิซซ่าฮาวายเอี้ยน","Hawaiian Pizza","夏威夷披萨",359],
       ["R05-02","พิซซ่าเบคอนชีส","Pizza Bacon & Cheese","培根芝士披萨",389],
       ["R05-03","พิซซ่าโฟร์ชีส","Pizza Four Cheese","四芝士披萨",420],
@@ -62,7 +62,7 @@
       ["R05-10","พิซซ่าซีฟู้ดซอสทูซันด์ไอส์แลนด์","Pizza Seafood Thousand Island","海鲜千岛酱披萨",480],
       ["R05-11","พิซซ่าทรัฟเฟิลแฮม","Pizza Truffle & Ham","松露火腿披萨",590]
     ]},
-    {"id": "R06", "th": "ข้าวและเส้น", "en": "Rice & Noodles", "items": [
+    {"id": "R06", "type": "food", "th": "ข้าวและเส้น", "en": "Rice & Noodles", "items": [
       ["R06-01","ผัดก๋วยเตี๋ยวไก่","Chicken Stir-Fried Rice Noodles","鸡肉炒河粉",159],
       ["R06-02","ข้าวกะเพราหมูสับไข่ดาว","Thai Holy Basil Minced Pork with Fried Egg","打抛猪肉碎配煎蛋盖饭",149],
       ["R06-03","ข้าวกะเพราพิคานย่า","Picanha Holy Basil Rice","皮卡尼亚打抛盖饭",350],
@@ -77,17 +77,17 @@
       ["R06-12","ผัดซีอิ๊วหมู","Stir-Fried Rice Noodles with Pork","猪肉酱油炒河粉",159],
       ["R06-13","ผัดไทยกุ้งสด","Pad Thai with Shrimp","鲜虾炒河粉",189]
     ]},
-    {"id": "R07", "th": "สลัด", "en": "Salad", "items": [
+    {"id": "R07", "type": "food", "th": "สลัด", "en": "Salad", "items": [
       ["R07-01","สลัดผักสด","Garden Salad","田园沙拉",189],
       ["R07-02","ซีซาร์สลัดไก่","Chicken Caesar Salad","鸡肉凯撒沙拉",219],
       ["R07-03","ซีซาร์สลัดเบคอน","Bacon Caesar Salad","培根凯撒沙拉",259],
       ["R07-04","สลัดเห็ดย่าง","Grilled Mushroom Salad","烤蘑菇沙拉",189]
     ]},
-    {"id": "R08", "th": "ซุป", "en": "Soup", "items": [
+    {"id": "R08", "type": "food", "th": "ซุป", "en": "Soup", "items": [
       ["R08-01","ซุปมะเขือเทศ","Tomato Soup","番茄汤",120],
       ["R08-02","ซุปเห็ด","Mushroom Soup","蘑菇汤",120]
     ]},
-    {"id": "R09", "th": "ซุปและแกง", "en": "Soup & Curry", "items": [
+    {"id": "R09", "type": "food", "th": "ซุปและแกง", "en": "Soup & Curry", "items": [
       ["R09-01","แกงเขียวหวานไก่","Green Curry with Chicken","鸡肉绿咖喱",280],
       ["R09-02","แกงเขียวหวานน่องเนื้อ","Green Curry with Beef Shank","牛腱绿咖喱配煎饼",320],
       ["R09-03","แกงจืดไข่","Thai Egg Drop Soup","泰式蛋花汤",180],
@@ -98,7 +98,7 @@
       ["R09-08","ต้มยำกุ้ง","Tom Yum Goong","冬阴功汤",350],
       ["R09-09","ต้มยำทะเล","Tom Yum Seafood","冬阴海鲜汤",390]
     ]},
-    {"id": "R10", "th": "สเต็ก", "en": "Steak", "items": [
+    {"id": "R10", "type": "food", "th": "สเต็ก", "en": "Steak", "items": [
       ["R10-01","สเต็กไก่บัลเลต์ มานา","MANA Ballet Chicken","芭蕾鸡排",195],
       ["R10-02","เป็ดคอนฟี","Duck Confit","油封鸭腿",390],
       ["R10-03","สเต็กเนื้อเฟลงก์","Flank Steak","牛腹⾁排",790],
@@ -106,7 +106,7 @@
       ["R10-05","สเต็กปลากะพง","Sea Bass Steak","鲈鱼排",490],
       ["R10-06","สเต็กคอหมูคุโรบุตะ","Kurobuta Pork Loin Steak","黑豚猪颈⾁排",329]
     ]},
-    {"id": "R11", "th": "น้ำอัดลมและน้ำดื่ม", "en": "Soft Drink", "items": [
+    {"id": "R11", "type": "drink", "th": "น้ำอัดลมและน้ำดื่ม", "en": "Soft Drink", "items": [
       ["R11-01","โค้กกระป๋อง","Coke Can","可乐罐",30],
       ["R11-02","โค้กซีโร่กระป๋อง","Coke Zero Can","零度可乐罐",30],
       ["R11-03","จินเจอร์เอลกระป๋อง","Ginger Ale Can","姜汁汽水罐",60],
@@ -114,7 +114,7 @@
       ["R11-05","น้ำแร่อัดก๊าซรินน์","Rynn Sparking Water","Rynn气泡水",60],
       ["R11-06","สไปรท์กระป๋อง","Sprite Can","雪碧罐",30]
     ]},
-    {"id": "R12", "th": "ผัดและทอด", "en": "Wok, Stir-Fry & Fried", "items": [
+    {"id": "R12", "type": "food", "th": "ผัดและทอด", "en": "Wok, Stir-Fry & Fried", "items": [
       ["R12-01","กะเพราน่องเนื้อ","Holy Basil Beef Shank","牛腱打抛盖饭",380],
       ["R12-02","กะเพราปูนิ่ม","Holy Basil Soft-Shell Crab","软壳蟹打抛盖饭",380],
       ["R12-03","กะเพราหมูสับ","Holy Basil Minced Pork","猪肉碎打抛盖饭",150],
@@ -133,7 +133,7 @@
       ["R12-16","หมูสามชั้นผัดพริกเกลือ","Salt & Chilli Pork Belly","椒盐三层肉",220],
       ["R12-17","หน่อไม้ฝรั่งผัดกุ้งแม่น้ำ","Stir-Fried Asparagus with River Prawns","芦笋炒河虾",420]
     ]},
-    {"id": "R13", "th": "ยำ", "en": "Yum", "items": [
+    {"id": "R13", "type": "food", "th": "ยำ", "en": "Yum", "items": [
       ["R13-01","ยำแซลมอน","Salmon Spicy","凉拌三文⻥",320],
       ["R13-02","ยำผลไม้ชาววังปลาสลิดทอดกรอบ","Royal Thai Fruit Salad with Crispy Gourami","宫廷水果沙拉配炸鲈⻥",220],
       ["R13-03","ยำวุ้นเส้นทะเล","Seafood Glass Noodle Salad","海鲜粉丝沙拉",280],
@@ -141,7 +141,7 @@
       ["R13-05","ยำหมู มานา","MANA Spicy Pork Salad","凉拌猪肉",280],
       ["R13-06","คุโรบุตะคลุกฝุ่น","Kurobuta Kluk Foon","黑豚拌粉猪⾁",220]
     ]},
-    {"id": "R14", "th": "เค้กและเบเกอรี่", "en": "Cake & Bakery", "items": [
+    {"id": "R14", "type": "food", "th": "เค้กและเบเกอรี่", "en": "Cake & Bakery", "items": [
       ["R14-01","บราวนี่ราสเบอร์รี่","Brownie Raspberry","覆盆子布朗尼",189],
       ["R14-02","ช็อกโกแลตมูส","Chocolate Mousse","巧克力慕斯",189],
       ["R14-03","โยเกิร์ตมะลิ","Jasmine Yogurt","茉莉酸奶",189],
@@ -156,15 +156,15 @@
       ["R14-12","ทีรามิสุ","Tiramisu","提拉米苏",185],
       ["R14-13","เค้กเลมอน","Lemon Cake","柠檬蛋糕",195]
     ]},
-    {"id": "R15", "th": "ซอสจิ้ม", "en": "Dipping Sauce", "items": [
+    {"id": "R15", "type": "food", "th": "ซอสจิ้ม", "en": "Dipping Sauce", "items": [
       ["R15-01","ซอสทรัฟเฟิล","Truffle Sauce","松露酱",30],
       ["R15-02","ซอสทูซันด์ไอส์แลนด์","Thousand Island","千岛酱",30]
     ]},
-    {"id": "R16", "th": "คอมบูชา", "en": "Kombucha", "items": [
+    {"id": "R16", "type": "drink", "th": "คอมบูชา", "en": "Kombucha", "items": [
       ["R16-01","คอมบูชาบับเบอรี่","Kombucha Bubbery","康普茶泡泡莓",125],
       ["R16-02","คอมบูชาไอแอมบับเบิล","Kombucha I'm Bubble","康普茶我是泡泡",125]
     ]},
-    {"id": "R17", "th": "เมนูมัทฉะ", "en": "Matcha Flavor", "items": [
+    {"id": "R17", "type": "drink", "th": "เมนูมัทฉะ", "en": "Matcha Flavor", "items": [
       ["R17-01","เบลสซิ่ง ฟรอม เดอะ เฮฟเว่น","Blessing From The Heaven","天赐之福",120],
       ["R17-02","มัทฉะโคลด์โฟม","Matcha Cold Foam","抹茶冷奶泡",120],
       ["R17-03","มัทฉะมะพร้าว","Matcha Coconut","抹茶椰子",120],
@@ -176,7 +176,7 @@
       ["R17-09","มัทฉะมะพร้าวสด","Matcha Fresh Coconut","抹茶鲜椰子",130],
       ["R17-10","มัทฉะมะพร้าวคั่ว","Matcha Roasted Coconut","抹茶烤椰子",150]
     ]},
-    {"id": "R18", "th": "สมูทตี้และเครื่องดื่มปั่น", "en": "Smoothie & Blended", "items": [
+    {"id": "R18", "type": "drink", "th": "สมูทตี้และเครื่องดื่มปั่น", "en": "Smoothie & Blended", "items": [
       ["R18-01","บลูฮาวายเอี้ยนโซดา","Blue Hawaiian Soda","蓝色夏威夷苏打",89],
       ["R18-02","นมสดบลูเบอร์รี่","Blueberry Fresh Milk","蓝莓鲜奶",89],
       ["R18-03","บลูเบอร์รี่สมูทตี้","Blueberry Smoothie","蓝莓奶昔",159],
@@ -200,10 +200,10 @@
       ["R18-21","ดัลโกนา","Dalgona","咖啡奶霜鲜奶",169],
       ["R18-22","มะพร้าวน้ำหอมสด (เสิร์ฟในลูก)","Fresh Coconut Served in Shell","鲜椰子⽔（原壳）",100]
     ]},
-    {"id": "R19", "th": "เบียร์", "en": "Beer", "items": [
+    {"id": "R19", "type": "drink", "th": "เบียร์", "en": "Beer", "items": [
       ["R19-01","เบียร์สิงห์","Singha Beer","胜狮啤酒",120]
     ]},
-    {"id": "R20", "th": "ไวน์", "en": "Wine", "items": [
+    {"id": "R20", "type": "drink", "th": "ไวน์", "en": "Wine", "items": [
       ["R20-01","ไวน์แดงคาซ่า รอสโซ่","Casa Rosso Red","卡萨罗素红葡萄酒",1550],
       ["R20-02","เจ. โลห์ร โอโซส เมอร์โลต์","J. Lohr Osos Merlot","梅洛",1450],
       ["R20-03","ไวน์ขาวมอนเตส ซอวีญง บลองค์","Montes Sauvignon Blanc White Wine","蒙特斯长相思白葡萄酒",1090],
