@@ -1,6 +1,6 @@
 # Mana Booking — หน้าเว็บจองโต๊ะ + สั่งอาหารล่วงหน้า (Mana Garden / Mana Ratchayothin)
 
-เว็บหน้าเดียว (static) โฮสต์บน **GitHub Pages** ดีไซน์ Dark Luxe (เขียวเข้ม/ดำ + ทอง) ใช้บนมือถือเป็นหลัก
+เว็บหน้าเดียว (static) โฮสต์บน **GitHub Pages** ดีไซน์ Light Luxe v3 (พื้นขาว + ทอง #d4af37 + ปุ่มดำ, การ์ดเมนูแบบกริด) ใช้บนมือถือเป็นหลัก
 หลังบ้านคือ **Google Apps Script Web App** ที่ทำหน้าที่เป็น JSON API: ตรวจรอบว่าง, ล็อกคิวกันจองซ้ำ,
 เขียนลงชีต Master Database, และส่ง LINE แจ้งทีมงาน (ฟอร์ม Google เดิมยังใช้งานได้ตามปกติ)
 
@@ -16,7 +16,7 @@
 ```
 index.html              หน้าเว็บ Mana Garden (โครง HTML)
 ratch/index.html        หน้า Mana Ratchayothin (สร้างจาก index.html ด้วย tools/build_pages.py)
-css/app.css             ธีม Dark Luxe v2 (glass, ทอง champagne, animation, รองรับ reduced-motion)
+css/app.css             ธีม Light Luxe v3 (ขาว-ทอง, การ์ดเมนู 2/3 คอลัมน์, รองรับ reduced-motion)
 js/config.js            ตั้งค่า: API_URL, timeout, ไฟล์โลโก้ของแต่ละสาขา
 js/app.js               ตรรกะหน้าเว็บ + เรียก API
 data/garden.json        เมนู + ตั้งค่าสาขา Mana Garden (16 หมวด 139 รายการ)
@@ -81,4 +81,4 @@ Deploy → **Manage deployments → Edit (ดินสอ) → Version: New vers
 * หน้าเว็บเรียก API แบบ "simple CORS request": ตรวจรอบว่างด้วย GET, ส่งการจองด้วย POST `Content-Type: text/plain`
   (ไม่มี preflight) Apps Script จะ redirect ไปยัง googleusercontent ซึ่งเบราว์เซอร์ตามให้เอง
 * ถ้าส่งการจองแล้วเน็ตหลุด ลูกค้ากด "ยืนยันการจอง" ซ้ำได้ เซิร์ฟเวอร์จะคืนรหัสเดิม ไม่สร้างแถวซ้ำ
-* ฟอนต์ Prompt โหลดจาก Google Fonts (ถ้าโหลดไม่ได้ใช้ฟอนต์สำรองของเครื่อง)
+* ฟอนต์ Inter + Noto Sans Thai โหลดจาก Google Fonts (ถ้าโหลดไม่ได้ใช้ฟอนต์สำรองของเครื่อง) · การ์ดเมนูใช้ช่อง "Photo coming soon" จนกว่าจะมีรูปอาหาร

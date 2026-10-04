@@ -75,7 +75,7 @@
     var DOWS = ['อา.', 'จ.', 'อ.', 'พ.', 'พฤ.', 'ศ.', 'ส.'];
     var S = {
       step: 1, iso: B.today, slot: '', zone: B.zones.length === 1 ? B.zones[0].key : '', guests: 2,
-      preorder: null, cart: {}, avail: null, availErr: '', loading: false, qr: '', submitting: false, openCats: {}, q: ''
+      preorder: null, cart: {}, avail: null, availErr: '', loading: false, qr: '', submitting: false, openCats: {}, q: '', cat: 'all'
     };
     var ITEMS = {};
     B.menu.forEach(function (c) { c.items.forEach(function (it) { ITEMS[it[0]] = { id: it[0], th: it[1], en: it[2], zh: it[3], price: it[4], cat: c.id }; }); });
@@ -109,6 +109,7 @@
       if (String($('cartCnt').textContent) !== String(ic)) { $('cartCnt').textContent = ic; if (ic > 0) bump($('cartCnt')); }
       $('cbText').textContent = ic + ' รายการ';
       $('cbTotal').textContent = money(t);
+      $('mhSub').textContent = B.name + ' \u2014 Food Pre-order';
       $('cartBar').classList.toggle('show', S.step === 2 && S.preorder === true && ic > 0);
       Array.prototype.forEach.call($('steps').children, function (d) {
         var n = +d.getAttribute('data-s');
@@ -227,34 +228,40 @@
     }
 
     /* ---------- menu ---------- */
+    var CAM = '<svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h3l1.5-2h7L17 8h3a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1z"/><circle cx="12" cy="13" r="3.6"/></svg>';
     function buildMenu() {
-      var h = B.menu.map(function (c, i) {
-        var items = c.items.map(function (it) {
-          var tags = (it[2] ? '<span class="tag">' + esc(it[2]) + '</span>' : '') + (it[3] ? '<span class="tag">' + esc(it[3]) + '</span>' : '');
-          return '<div class="item" data-id="' + it[0] + '"><div class="it-main"><div class="it-name">' + esc(it[1]) + '</div><div>' + tags + '</div></div>' +
-            '<div class="it-price">' + money(it[4]) + ' <small>/ จาน</small></div>' +
-            '<div class="step"><button type="button" data-act="dec" aria-label="ลด">&minus;</button><span class="q">0</span><button type="button" class="p" data-act="inc" aria-label="เพิ่ม">+</button></div>' +
-            '<div class="it-sub">-</div></div>';
+      var h = B.menu.map(function (c) {
+        var tag = esc(String(c.en || c.th).toUpperCase());
+        var cards = c.items.map(function (it) {
+          var primary = it[2] || it[1];
+          var subs = (it[2] ? '<div class="mc-sub">' + esc(it[1]) + '</div>' : '') + (it[3] ? '<div class="mc-sub zh">' + esc(it[3]) + '</div>' : '');
+          return '<article class="item mc" data-id="' + it[0] + '">' +
+            '<div class="mc-img">' + CAM + '<span>Photo coming soon</span><em>' + esc(it[0]) + '</em></div>' +
+            '<div class="mc-body"><div class="mc-tag">' + tag + '</div><div class="mc-name">' + esc(primary) + '</div>' + subs +
+            '<div class="it-sub"></div>' +
+            '<div class="mc-foot"><span class="mc-price">' + Number(it[4]).toLocaleString('en-US') + ' .-</span>' +
+            '<button type="button" class="add" data-act="inc" aria-label="เพิ่ม ' + esc(primary) + '">Add</button>' +
+            '<div class="step"><button type="button" data-act="dec" aria-label="ลด">&minus;</button><span class="q">0</span><button type="button" class="p" data-act="inc" aria-label="เพิ่ม">+</button></div></div>' +
+            '</div></article>';
         }).join('');
-        return '<section class="cat' + (i === 0 ? ' open' : '') + '" data-cat="' + c.id + '"><button type="button" class="cat-h"><span class="t">' + esc(c.th) + '<small>' + esc(c.en) + ' &middot; ' + c.items.length + ' รายการ</small></span><span class="bd">0</span><span class="chev"></span></button><div class="cat-b">' + items + '</div></section>';
+        return '<section class="cat" data-cat="' + c.id + '"><h3 class="cat-title"><span>' + esc(c.th) + '</span><small>' + esc(c.en) + ' &middot; ' + c.items.length + ' รายการ</small></h3><div class="mgrid">' + cards + '</div></section>';
       }).join('');
       $('menu').innerHTML = h;
-      $('tabs').innerHTML = B.menu.map(function (c) { return '<div class="tab" data-cat="' + c.id + '">' + esc(c.th) + '<i class="hide">0</i></div>'; }).join('');
+      $('tabs').innerHTML = '<div class="tab on" data-cat="all">ALL<span class="tth"> ทั้งหมด</span></div>' + B.menu.map(function (c) { return '<div class="tab" data-cat="' + c.id + '">' + esc(c.th) + '<i class="hide">0</i></div>'; }).join('');
     }
 
     function refreshItem(id) {
       var q = S.cart[id] || 0, it = ITEMS[id];
       var rows = document.querySelectorAll('.item[data-id="' + id + '"]');
       Array.prototype.forEach.call(rows, function (row) {
-        row.className = 'item' + (q > 0 ? ' on' : '');
+        row.classList.toggle('on', q > 0);
         var qe = row.querySelector('.q');
         if (String(qe.textContent) !== String(q)) { qe.textContent = q; if (q > 0) bump(qe); }
-        row.querySelector('.it-sub').textContent = q > 0 ? money(q * it.price) : '-';
+        var sub = row.querySelector('.it-sub');
+        if (sub) sub.textContent = q > 0 ? 'รวม ' + money(q * it.price) : (row.classList.contains('mc') ? '' : '-');
       });
-      var cat = document.querySelector('.cat[data-cat="' + it.cat + '"]');
       var n = 0;
       B.menu.forEach(function (c) { if (c.id === it.cat) c.items.forEach(function (x) { n += S.cart[x[0]] || 0; }); });
-      if (cat) { cat.querySelector('.bd').textContent = n; cat.className = cat.className.replace(' hasq', '') + (n > 0 ? ' hasq' : ''); }
       var tab = document.querySelector('.tab[data-cat="' + it.cat + '"] i');
       if (tab) { tab.textContent = n; tab.className = n > 0 ? '' : 'hide'; }
     }
@@ -270,29 +277,33 @@
 
     function applySearch() {
       var q = S.q.trim().toLowerCase(), any = false;
+      var sel = q ? 'all' : (S.cat || 'all');
       Array.prototype.forEach.call(document.querySelectorAll('.cat'), function (cat) {
-        var vis = 0;
+        var vis = 0, inCat = sel === 'all' || cat.getAttribute('data-cat') === sel;
         Array.prototype.forEach.call(cat.querySelectorAll('.item'), function (row) {
           var it = ITEMS[row.getAttribute('data-id')];
           var hit = !q || (it.th + ' ' + it.en + ' ' + it.zh).toLowerCase().indexOf(q) > -1;
           row.style.display = hit ? '' : 'none';
           if (hit) vis++;
         });
-        cat.style.display = vis ? '' : 'none';
-        if (q && vis) cat.classList.add('open');
-        if (vis) any = true;
+        cat.style.display = (vis && inCat) ? '' : 'none';
+        if (vis && inCat) any = true;
       });
       $('noRes').className = 'empty' + (any ? ' hide' : '');
+      Array.prototype.forEach.call(document.querySelectorAll('.tab'), function (t) { t.classList.toggle('on', t.getAttribute('data-cat') === sel); });
     }
 
+    // category tabs: show one category (or ALL) as a card grid
     function openCat(id, scroll) {
-      var cat = document.querySelector('.cat[data-cat="' + id + '"]');
-      if (!cat) return;
-      cat.classList.add('open');
-      Array.prototype.forEach.call(document.querySelectorAll('.tab'), function (t) { t.classList.toggle('on', t.getAttribute('data-cat') === id); });
+      if (id !== 'all' && !document.querySelector('.cat[data-cat="' + id + '"]')) return;
+      S.cat = id;
+      if (S.q) { S.q = ''; $('fSearch').value = ''; }
+      applySearch();
+      var t = document.querySelector('.tab.on');
+      if (t && t.scrollIntoView) { var box = $('tabs'); box.scrollLeft = t.offsetLeft - (box.clientWidth - t.offsetWidth) / 2; }
       if (scroll) {
-        var top = document.querySelector('.top').offsetHeight + 56;
-        window.scrollTo({ top: cat.getBoundingClientRect().top + window.pageYOffset - top, behavior: SMOOTH });
+        var top = document.querySelector('.top').offsetHeight + 8;
+        window.scrollTo({ top: Math.max(0, $('menuHead').getBoundingClientRect().top + window.pageYOffset - top), behavior: SMOOTH });
       }
     }
 
@@ -495,11 +506,9 @@
       $('modeNo').onclick = function () { S.preorder = false; renderStep2(); renderHeader(); };
       $('fSearch').oninput = function () { S.q = $('fSearch').value; applySearch(); };
       $('tabs').onclick = function (e) { var t = e.target.closest('.tab'); if (t) openCat(t.getAttribute('data-cat'), true); };
-      $('menu').onclick = function (e) {
-        var h = e.target.closest('.cat-h');
-        if (h) { var c = h.parentNode; c.classList.toggle('open'); if (c.classList.contains('open')) openCat(c.getAttribute('data-cat'), false); return; }
-        stepClick(e);
-      };
+      $('menu').onclick = stepClick;
+      $('fullMenu').onclick = function () { openCat('all', true); };
+      $('tabNext').onclick = function () { $('tabs').scrollBy({ left: 220, behavior: SMOOTH }); };
       $('sheetB').onclick = stepClick;
       function stepClick(e) {
         var b = e.target.closest('button[data-act]'); if (!b) return;
