@@ -7,15 +7,23 @@
 | สาขา | ลิงก์ |
 |---|---|
 | Mana Garden | https://khatawutt.github.io/mana-booking/ |
-| Mana Ratchayothin | https://khatawutt.github.io/mana-booking/?b=ratch |
+| Mana Ratchayothin | https://khatawutt.github.io/mana-booking/ratch/ (ลิงก์เดิม `?b=ratch` ยังใช้ได้) |
+
+> แนะนำให้แชร์ลิงก์ Ratchayothin เป็น `/ratch/` เพราะตัวอย่างลิงก์ใน LINE/Facebook จะแสดงโลโก้ถูกสาขา
 
 ## โครงสร้าง
 
 ```
-index.html              หน้าเว็บทั้งหมด (HTML + CSS + JS) — ค่า API_URL อยู่บนสุดของสคริปต์
+index.html              หน้าเว็บ Mana Garden (โครง HTML)
+ratch/index.html        หน้า Mana Ratchayothin (สร้างจาก index.html ด้วย tools/build_pages.py)
+css/app.css             ธีม Dark Luxe v2 (glass, ทอง champagne, animation, รองรับ reduced-motion)
+js/config.js            ตั้งค่า: API_URL, timeout, ไฟล์โลโก้ของแต่ละสาขา
+js/app.js               ตรรกะหน้าเว็บ + เรียก API
 data/garden.json        เมนู + ตั้งค่าสาขา Mana Garden (16 หมวด 139 รายการ)
 data/ratch.json         เมนู + ตั้งค่าสาขา Mana Ratchayothin (20 หมวด 165 รายการ)
 assets/mana-qr.jpg      QR พร้อมเพย์สำหรับโอนมัดจำ
+assets/logo-*.webp      โลโก้พื้นโปร่งใส (garden / ratch) · mark-*.webp = ไอคอน M ใน header
+assets/favicon-*.png, apple-touch-*.png, og-*.png   ไอคอนแท็บ / หน้าจอโฮม / รูปตัวอย่างตอนแชร์
 backend/                โค้ด Google Apps Script (ไม่มี token/รหัสลับใดๆ)
   WebApp.gs             doGet/API, ตรวจข้อมูล, ล็อก, เขียนชีต, ส่ง LINE, rate-limit
   WebMenuData.gs        เมนู+ราคาฝั่งเซิร์ฟเวอร์ (สร้างจาก data/*.json — ห้ามแก้มือ)
@@ -23,6 +31,7 @@ backend/                โค้ด Google Apps Script (ไม่มี token/�
   Index.html            หน้าเว็บเก่าแบบ Apps Script (ยังใช้ได้ ลิงก์เดิมไม่เสีย)
   Ratchayothin_doPost_patch.md   วิธีแก้ doPost 5 บรรทัด
 tools/build_backend_menu.py      data/*.json -> backend/WebMenuData.gs
+tools/build_pages.py             index.html -> ratch/index.html (รันทุกครั้งที่แก้ index.html)
 ```
 
 ## ความปลอดภัย
@@ -60,6 +69,12 @@ Deploy → **Manage deployments → Edit (ดินสอ) → Version: New vers
 ทดสอบ: เปิด `<API_URL>?api=ping` ต้องได้ JSON `{"ok":true,...}`
 
 ถ้าเปลี่ยน URL ของ Web App ให้แก้ค่า `API_URL` บนสุดของสคริปต์ใน `index.html`
+
+## เปลี่ยนโลโก้
+
+แทนที่ไฟล์ใน `assets/` ด้วยชื่อเดิม (`logo-garden.webp`, `logo-ratch.webp` ใช้พื้นโปร่งใส กว้างราว 640px) แล้ว push
+ถ้าแก้ `index.html` ให้รัน `python3 tools/build_pages.py` ก่อน commit ด้วย
+(เมื่อแก้ css/js ให้เปลี่ยนเลข `?v=2` ใน index.html เพื่อให้มือถือโหลดไฟล์ใหม่)
 
 ## หมายเหตุ
 
