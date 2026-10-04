@@ -1,0 +1,184 @@
+{
+  "branch": "garden",
+  "name": "Mana Garden",
+  "title": "Mana Garden | จองโต๊ะ & สั่งอาหาร",
+  "slots": ["17:00 - 19:00","19:00 - 21:00","21:00 - 23:00"],
+  "maxGuests": 50,
+  "slotGuestCap": 0,
+  "zones": [{"key":"PITI","label":"บ้านปิติ Baan Piti","cap":50,"unit":"seats","note":"บ้านหลังใหญ่ จุประมาณ 50 ท่าน / Large house, about 50 guests"},{"key":"MANA","label":"Mana Garden Cafe","cap":15,"unit":"tables","note":"คาเฟ่ 15 โต๊ะ ต่อโต๊ะรวมกันได้ / Cafe, 15 tables (joinable)"},{"key":"OUT","label":"Outdoor Zone โซนด้านนอก","cap":40,"unit":"seats","note":"โซนด้านนอก ประมาณ 40 ที่นั่ง / Outdoor, about 40 seats"}],
+  "depositPerTable": [300,500],
+  "menuVersion": "d10c306c",
+  "menu": [
+    {"id": "G01", "th": "เมนูแนะนำ", "en": "Recommended", "items": [
+      ["G01-01","บรูสเชตต้าสลัด","Bruschetta Salad","",290],
+      ["G01-02","กุ้งแม่น้ำยักษ์เผา (ซอสไข่เค็ม)","Giant river prawn (grilled) - Salted egg sauce","",890],
+      ["G01-03","กุ้งแม่น้ำยักษ์เผา (ซอสพริกเกลือ)","Giant river prawn (grilled) - Chili-salt sauce","",890],
+      ["G01-04","ข้าวคลุกกะปิสูตรมานา","Khao Kluk Kapi (shrimp paste rice)","",159],
+      ["G01-05","ยำหอยเชลล์มานา","Hotate (scallops) in spicy and sour sauce","",250],
+      ["G01-06","ไก่เนื้อนิ่ม","Sous vide chicken","",109],
+      ["G01-07","ตำถาดมานา","Mana Garden Som Tam tray","",350],
+      ["G01-08","แกงเขียวหวานเนื้อโรตี","Green curry with beef + roti","",320],
+      ["G01-09","คอหมูย่างคุโรบูตะ","Grilled Kurobuta pork with spicy tangy sauce","",165],
+      ["G01-10","ตำข้าวโพดแซลมอน","Salmon spicy corn salad","",250],
+      ["G01-11","ยำส้มโอ","Pomelo salad","",220],
+      ["G01-12","แกงเผ็ดเป็ดคอนฟิต","Red curry with confit duck","",350],
+      ["G01-13","ยำหลากหลายรวมบ้านปิติ","Spicy seafood salad","",390],
+      ["G01-14","ยำหมูยอปลาร้า","Spicy Vietnamese sausage salad - With pla ra (fermented fish)","",220],
+      ["G01-15","ยำหมูยอ ไม่ปลาร้า","Spicy Vietnamese sausage salad - Without pla ra","",220],
+      ["G01-16","ตำผลไม้ปิติ","Spicy fruit salad","",220],
+      ["G01-17","แกงป่าเนื้อหน่อกระวานสไตล์จันทบุรี","Jungle curry with beef","",350],
+      ["G01-18","ต้มแซ่บเนื้อน่องลาย","Hot and spicy soup with beef shank","",320],
+      ["G01-19","ยำคอหมูละอ่อน","Spicy grilled pork neck salad","",180],
+      ["G01-20","ตำหลวงพระบาง","Luang Prabang papaya salad","",90],
+      ["G01-21","ตำกุ้งสดไหลบัวแสนปิติ ปลาร้า","Lotus root spicy salad with prawns - With pla ra (fermented fish)","",190],
+      ["G01-22","ตำกุ้งสดไหลบัวแสนปิติ ไม่ปลาร้า","Lotus root spicy salad with prawns - Without pla ra","",190]
+    ]},
+    {"id": "G02", "th": "เมนูทานเล่น", "en": "Appetizer", "items": [
+      ["G02-01","คางกุ้งแซ่บ","Fried shrimp chin with Thai herbs","",89],
+      ["G02-02","เฟรนฟรายส์","French fries","",89],
+      ["G02-03","เอบิโรล ขลุ่ยกุ้ง","Ebi rolls","",119],
+      ["G02-04","ปีกไก่ทอด","Chicken wings","",129],
+      ["G02-05","หมูซัมเมอร์ (หมูแดดเดียว)","Fried sun-dried pork","",149],
+      ["G02-06","มันบดอบชีส","Mashed potato with cheese","",189],
+      ["G02-07","คารามารี่ (ปลาหมึก)","Deep-fried calamari rings","",189],
+      ["G02-08","ฟิชแอนด์ชิปส์","Fish and chips","",350]
+    ]},
+    {"id": "G03", "th": "เมนูสลัด", "en": "Salad", "items": [
+      ["G03-01","บูราต้าสลัด","Burrata tomato salad","",259],
+      ["G03-02","ซีซ่าสลัด เบค่อน","Caesar salad with bacon","",259],
+      ["G03-03","สลัดเห็ดย่าง","Grilled mushroom salad","",229],
+      ["G03-04","ซีซ่าสลัดไก่","Caesar salad with chicken","",239],
+      ["G03-05","การ์เด้นสลัด","Garden salad","",219],
+      ["G03-06","มานาการ์เด้นสลัด","Mana Garden salad","",359]
+    ]},
+    {"id": "G04", "th": "เมนูสเต็ก", "en": "Steak", "items": [
+      ["G04-01","น่องเป็ดกงฟีต์","Duck leg confit","",350],
+      ["G04-02","สเต็กสันคอหมูคุโรบูตะ","Kurobuta pork steak","",295],
+      ["G04-03","สเต็กแซลมอน","Salmon steak","",650],
+      ["G04-04","สเต็กเนื้อวากิวออสเตรเลีย","Australian wagyu steak","",1500],
+      ["G04-05","สเต็กแกะ","Lamb rack steak","",1490]
+    ]},
+    {"id": "G05", "th": "เมนูทอด", "en": "Fried", "items": [
+      ["G05-01","กุ้งแม่น้ำทอดเกลือ","Deep-fried river prawn with Thai herb sauce","",390],
+      ["G05-02","ปลากะพงทอดน้ำปลา","Deep-fried sea bass with fish sauce","",420],
+      ["G05-03","ปลากะพงลุยสวน","Deep-fried sea bass with spicy salad","",420],
+      ["G05-04","ปลากะพงทอดกระเทียม","Deep-fried sea bass with garlic","",420],
+      ["G05-05","ไข่เจียวปูก้อนจัมโบ้พรีเมี่ยม","Crab omelette (premium jumbo lump crab) - Crab","",850],
+      ["G05-06","ไข่เจียวกุ้งสับ","Minced shrimp omelette - Shrimp","",150],
+      ["G05-07","สามชั้นทอดน้ำปลา/กระเทียม","Fried pork belly with fish sauce","",180],
+      ["G05-08","สามชั้นคั่วพริกเกลือ","Fried pork belly with chili, garlic and salt","",250],
+      ["G05-09","กุ้งทอดซอสมะขาม","Deep-fried prawn with tamarind sauce","",350],
+      ["G05-10","กุ้งแม่น้ำคั่วพริกเกลือ","River prawns roasted with salt and chili","",350],
+      ["G05-11","ปูนิ่มทอดกระเทียม","Deep-fried soft shell crab with garlic","",360],
+      ["G05-12","ปูนิ่มคั่วพริกเกลือ","Deep-fried soft shell crab with chili and salt","",360]
+    ]},
+    {"id": "G06", "th": "เมนูผัด", "en": "Stir Fry", "items": [
+      ["G06-01","หน่อไม้ฝรั่งผัดกุ้ง","Stir-fried asparagus and prawn in oyster sauce","",220],
+      ["G06-02","เนื้อปูผัดผงกะหรี่","Stir-fried lump crab meat with curry powder sauce","",480],
+      ["G06-03","ผัดพริกแกงหมูกรอบ","Stir-fried crispy pork with spicy red curry paste","",250],
+      ["G06-04","เนื้อพิคานย่าออสเตรเลียผัดน้ำมันหอย","Stir-fried Australian picanha beef with oyster sauce","",250],
+      ["G06-05","ผัดเผ็ดเนื้อออสเตรเลีย","Stir-fried Australian beef with spicy red curry sauce","",280]
+    ]},
+    {"id": "G07", "th": "เมนูอาหารไทย", "en": "Thai Dish", "items": [
+      ["G07-01","ผัดไทยกุ้งแม่น้ำ","Pad Thai with river prawns","",390],
+      ["G07-02","ผัดไทยกุ้งสด","Pad Thai with prawns","",159],
+      ["G07-03","ข้าวแมว","Salmon with rice","",189],
+      ["G07-04","ข้าวขยำปู","Crab with rice","",350],
+      ["G07-05","กะเพราเนื้อพิคานย่า","Stir-fried picanha with chili and basil","",450],
+      ["G07-06","น้ำเงี้ยวกระดูกหมู","Mana's Nam Ngiao (pork bone)","",129],
+      ["G07-07","กะเพราทะเลรวม + ไข่ดาว (ราดข้าว)","Stir-fried pork with chili and basil + fried egg","",189],
+      ["G07-08","กะเพราเนื้อโคขุนสับ + ไข่ดาว (ราดข้าว)","Stir-fried minced beef with chili and basil + fried egg","",129],
+      ["G07-09","ผัดพริกแกงกุ้ง + ไข่ดาว (ราดข้าว)","Stir-fried shrimp with chili and basil + fried egg","",129],
+      ["G07-10","กะเพราปู (ราดข้าว)","Stir-fried crab with chili and basil + fried egg","",380],
+      ["G07-11","ข้าวซอยไก่","Khao Soi chicken - Chicken","",139],
+      ["G07-12","ข้าวซอยเนื้อ","Khao Soi beef - Beef","",219],
+      ["G07-13","ข้าวผัดไข่","Thai fried rice - Egg","",89],
+      ["G07-14","ข้าวผัดกุ้ง","Thai fried rice - Prawn","",129],
+      ["G07-15","ข้าวผัดปู","Thai fried rice - Crab","",380]
+    ]},
+    {"id": "G08", "th": "เมนูน้ำพริก", "en": "Chilli Sauce", "items": [
+      ["G08-01","ชุดน้ำพริกกะปิคุณย่า","Thai spicy shrimp paste dipping sauce set (Grandma's recipe)","",180],
+      ["G08-02","ชุดน้ำพริกกุ้งสด","Shrimp paste chili sauce set with fresh shrimp","",220],
+      ["G08-03","น้ำพริกไข่ปูมัน","Spicy crab roe chili dip","",380],
+      ["G08-04","เมี่ยงปลากะพง","Seabass wrap with vegetables and Thai herbs","",470]
+    ]},
+    {"id": "G09", "th": "เมนูพิซซ่า", "en": "Pizza", "items": [
+      ["G09-01","เปปเปอโรนี่","Pepperoni","",379],
+      ["G09-02","ทรัฟเฟิลและแฮม","Truffle & Ham","",590],
+      ["G09-03","แฮมร็อกเก็ตบรูเชสต้า","Ham Rocket Bruschetta","",590],
+      ["G09-04","เพสโต้ไก่ชูวี","Chicken sous vide Pesto","",379],
+      ["G09-05","สโม๊คแซลม่อนบรูเชสต้า","Smoked Salmon Bruschetta Cheese","",620],
+      ["G09-06","ฮาวายเอี้ยน","Hawaiian","",379],
+      ["G09-07","เยลโล่ซับมารีน ซอสมะม่วง","Yellow Submarine","",359],
+      ["G09-08","เบค่อนและชีส","Bacon & Cheese","",379],
+      ["G09-09","กุ้งกระเทียม","Garlic Shrimp","",429],
+      ["G09-10","มาการิต้า","Margherita","",359]
+    ]},
+    {"id": "G10", "th": "เมนูพาสต้า / สปาเกตตี้", "en": "Pasta / Spaghetti", "items": [
+      ["G10-01","สปาเกตตี้คาโบนาร่า ปู","Spaghetti Carbonara (crab) - Crab","",850],
+      ["G10-02","สปาเกตตี้คาโบนาร่า เบคอน","Spaghetti Carbonara (bacon) - Bacon","",289],
+      ["G10-03","พาสต้าเพสโต้ไก่","Pesto pasta (chicken) - Chicken","",189],
+      ["G10-04","พาสต้าเพสโต้หอยเชลล์","Pesto pasta (scallops) - Scallops","",480],
+      ["G10-05","สปาเกตตี้ผัดพริกแห้งเบคอน","Spaghetti with dry chili and bacon","",179],
+      ["G10-06","สปาเกตตี้ขี้เมาทะเล","Spaghetti with chili basil sauce and mixed seafood","",259],
+      ["G10-07","มักกะโรนีผัดกุ้ง","Stir-fried macaroni with shrimp","",159],
+      ["G10-08","มักกะโรนีไก่","Stir-fried macaroni with chicken","",149],
+      ["G10-09","สปาเกตตี้ผัดพริกแห้งไส้กรอกเยอรมัน","Spaghetti with dry chili and German sausage","",259]
+    ]},
+    {"id": "G11", "th": "เมนูกาแฟเย็น", "en": "Ice Coffee", "items": [
+      ["G11-01","อดัม มารอน","Adam Marron","",120],
+      ["G11-02","อีวา มารอน","Eva Marron","",120],
+      ["G11-03","ม็อคค่า","Mocha","",120],
+      ["G11-04","คาราเมล แม็คเคียอาโต้","Caramel Macchiato","",110],
+      ["G11-05","เอสเพรสโซ่","Espresso","",85],
+      ["G11-06","ลาเต้","Latte","",85],
+      ["G11-07","คาปูชิโน่","Cappuccino","",85]
+    ]},
+    {"id": "G12", "th": "เมนูซิกเนเจอร์", "en": "Signature Mana", "items": [
+      ["G12-01","ลองแบล็ค","Long Black","",80],
+      ["G12-02","อเมริกาโน่ ส้ม","Americano Orange","",120],
+      ["G12-03","อเมริกาโน่มะพร้าว","Long Black Coconut","",120],
+      ["G12-04","ลองแบล็ค พีช","Long Black Peach","",120],
+      ["G12-05","ลองแบล็ค น้ำผึ้ง","Long Black Honey","",120]
+    ]},
+    {"id": "G13", "th": "เมนูกาแฟร้อน", "en": "Hot Coffee", "items": [
+      ["G13-01","ลองแบล็ค","Long Black","",75],
+      ["G13-02","ลาเต้","Latte","",80],
+      ["G13-03","คาปูชิโน่","Cappuccino","",85],
+      ["G13-04","ม็อคค่า","Mocha","",85]
+    ]},
+    {"id": "G14", "th": "เมนูมัทฉะ", "en": "Matcha", "items": [
+      ["G14-01","ชาไทย","Milk tea (Thai tea)","",85],
+      ["G14-02","มัทฉะโคลโฟม","Matcha cold foam","",120],
+      ["G14-03","มัทฉะน้ำส้ม","Blessing from the Heaven (matcha orange)","",120],
+      ["G14-04","มัทฉะ ลาเต้","Matcha Latte","",120],
+      ["G14-05","มัทฉะ สตอเบอร์รี่","Matcha Strawberry","",120],
+      ["G14-06","มัทฉะ ยูสุ","Matcha Yuzu","",120],
+      ["G14-07","เพียวมัทฉะ","Pure Matcha","",120],
+      ["G14-08","มัทฉะ น้ำมะพร้าวสด","Matcha coconut","",120],
+      ["G14-09","มัทฉะ ฮันนี่เลม่อน","Matcha Honey Lemon","",120]
+    ]},
+    {"id": "G15", "th": "เมนูสมูทตี้", "en": "Mana Smoothies", "items": [
+      ["G15-01","ยูนิคอร์น สมูทตี้","Unicorn Smoothie","",149],
+      ["G15-02","แคโรทีน สมูทตี้","Carotene Smoothie","",149],
+      ["G15-03","มิกซ์เบอร์รี่ สมูทตี้","Mixed Berry Smoothie","",149],
+      ["G15-04","มะม่วง สมูทตี้","Mango Smoothie","",149],
+      ["G15-05","อะโวคาโดน้ำผึ้ง สมูทตี้","Avocado Honey Hive","",149],
+      ["G15-06","โคโคนัท คลาวด์","Coconut Cloud","",149],
+      ["G15-07","อะโวคาโดโยเกิร์ต สมูทตี้","Earth Smoothie","",149],
+      ["G15-08","ฝรั่งบ๊วยชื่นใจ","Guava Plum Smoothie","",149]
+    ]},
+    {"id": "G16", "th": "เมนูอิตาเลียนโซดา", "en": "Italian Soda", "items": [
+      ["G16-01","นิวแลนด์ อิตาเลียนโซดา สตรอเบอร์รี่","New Land Strawberry Italian Soda","",150],
+      ["G16-02","นิวแลนด์ อิตาเลียนโซดา ยูสุ","New Land Yuzu Italian Soda","",150],
+      ["G16-03","สตรอเบอร์รี่ โซดา","Strawberry Soda","",85],
+      ["G16-04","พีชโซดา","Peach Soda","",85],
+      ["G16-05","เสาวโซดา","Passion fruit Soda","",85],
+      ["G16-06","กุหลาบชมพูโซดา","Rose Pink Soda","",85],
+      ["G16-07","บลูฮาวาย","Blue Hawaii","",85],
+      ["G16-08","ลิ้นจี่ โซดา","Lychee Soda","",85],
+      ["G16-09","มะนาวโซดา","Lemon Soda","",85],
+      ["G16-10","ยูสุ โซดา","Yuzu Soda","",85]
+    ]}
+  ]
+}

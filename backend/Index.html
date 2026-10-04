@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#06120d">
+<title>Mana | &#xE08;&#xE2D;&#xE07;&#xE42;&#xE15;&#xE4A;&#xE30; & &#xE2A;&#xE31;&#xE48;&#xE07;&#xE2D;&#xE32;&#xE2B;&#xE32;&#xE23;</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#06120d; --bg2:#0b1d15; --card:#0f261b; --card2:#133124; --line:rgba(212,175,55,.28);
+  --gold:#d4af37; --gold2:#f3d98b; --text:#f5f1e3; --muted:#9db5a7; --ok:#4cc38a; --bad:#ff7b6b;
+  --r:18px;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;padding:0;background:var(--bg);color:var(--text);
+  font-family:'Prompt','Noto Sans Thai','Sarabun','Tahoma',system-ui,-apple-system,'Segoe UI',sans-serif;
+  font-size:15px;line-height:1.45}
+body{background:radial-gradient(1200px 500px at 50% -120px,#17402e 0%,var(--bg) 60%) fixed;min-height:100vh;padding-bottom:110px}
+button,input,textarea{font-family:inherit;color:inherit}
+.wrap{max-width:640px;margin:0 auto;padding:0 14px}
+/* top bar */
+.top{position:sticky;top:0;z-index:30;background:rgba(6,18,13,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.top-in{max-width:640px;margin:0 auto;padding:10px 14px 8px}
+.top-row{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.brand{font-weight:700;letter-spacing:.14em;color:var(--gold);font-size:13px;text-transform:uppercase}
+.brand small{display:block;letter-spacing:.02em;color:var(--muted);font-weight:400;font-size:11px;text-transform:none}
+.cartbtn{display:flex;align-items:center;gap:8px;background:linear-gradient(180deg,#1b3f2e,#12301f);border:1px solid var(--gold);border-radius:999px;padding:7px 14px;font-weight:600;font-size:14px;cursor:pointer}
+.cartbtn b{color:var(--gold2)}
+.cartbtn .cnt{background:var(--gold);color:#1a1405;border-radius:999px;min-width:20px;height:20px;line-height:20px;text-align:center;font-size:12px;font-weight:700;padding:0 5px}
+.steps{display:flex;gap:6px;margin-top:9px}
+.steps div{flex:1;text-align:center;font-size:12px;padding:6px 4px;border-radius:999px;background:var(--bg2);border:1px solid transparent;color:var(--muted)}
+.steps div{min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.top-row>div:first-child{min-width:0}
+.steps div.on{border-color:var(--gold);color:var(--gold2);background:#12301f;font-weight:600}
+.steps div.done{color:var(--ok)}
+.prog{margin-top:9px;display:none}
+.prog.show{display:block}
+.prog .bar{height:8px;border-radius:99px;background:#0a1912;border:1px solid var(--line);overflow:hidden}
+.prog .bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,#b08d1f,var(--gold2));transition:width .3s}
+.prog .txt{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-top:4px}
+.prog .txt b{color:var(--gold2)}
+/* cards */
+.card{background:linear-gradient(180deg,var(--card),#0c2017);border:1px solid rgba(255,255,255,.07);border-radius:var(--r);padding:16px;margin:14px 0;box-shadow:0 10px 30px rgba(0,0,0,.35)}
+.card.gold{border-color:var(--gold);box-shadow:0 0 0 1px rgba(212,175,55,.15),0 10px 30px rgba(0,0,0,.4)}
+.eyebrow{color:var(--gold);letter-spacing:.18em;font-size:12px;font-weight:600;text-transform:uppercase}
+h1{font-size:26px;line-height:1.2;margin:6px 0 4px;font-weight:700}
+h2{font-size:17px;margin:0 0 10px;font-weight:600}
+.sub{color:var(--muted);font-size:13px}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.pill{display:inline-block;border-radius:999px;padding:3px 10px;font-size:12px;border:1px solid var(--line);color:var(--gold2);background:rgba(212,175,55,.08)}
+.pill.green{color:#9be3bf;border-color:rgba(76,195,138,.4);background:rgba(76,195,138,.1)}
+.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-top:12px}
+.stat{background:#0a1a13;border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:10px 12px;min-height:62px}
+.stat.hl{border-color:var(--gold);background:#12301f}
+.stat span{display:block;font-size:11px;color:var(--muted)}
+.stat b{display:block;font-size:17px;margin-top:2px;word-break:break-word}
+@media(min-width:560px){.stats{grid-template-columns:repeat(4,1fr)}}
+/* form */
+label.f{display:block;font-size:13px;color:var(--muted);margin:12px 0 5px}
+label.f em{color:var(--gold);font-style:normal}
+input[type=text],input[type=tel],input[type=number],textarea{width:100%;background:#0a1a13;border:1px solid rgba(255,255,255,.14);border-radius:12px;padding:12px 13px;font-size:16px;outline:none}
+input:focus,textarea:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(212,175,55,.15)}
+textarea{min-height:76px;resize:vertical}
+.err{color:var(--bad);font-size:12px;margin-top:4px;display:none}
+.err.show{display:block}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+/* date strip */
+.dates{display:flex;gap:8px;overflow-x:auto;padding:4px 2px 10px;scrollbar-width:none}
+.dates::-webkit-scrollbar{display:none}
+.day{flex:0 0 auto;width:62px;text-align:center;padding:8px 0;border-radius:14px;background:#0a1a13;border:1px solid rgba(255,255,255,.1);cursor:pointer}
+.day small{display:block;color:var(--muted);font-size:11px}
+.day b{display:block;font-size:20px;line-height:1.2}
+.day.on{border-color:var(--gold);background:#17402e;box-shadow:0 0 0 1px rgba(212,175,55,.3)}
+.day.on small,.day.on b{color:var(--gold2)}
+.day.full{opacity:.4;cursor:not-allowed}
+.day.full::after{content:'\e40 \e15 \e47 \e21 ';display:block;font-size:10px;color:var(--bad)}
+.grid{display:grid;gap:8px}
+.slots{grid-template-columns:repeat(2,1fr)}
+@media(min-width:480px){.slots{grid-template-columns:repeat(3,1fr)}}
+.opt{padding:11px 10px;border-radius:14px;background:#0a1a13;border:1px solid rgba(255,255,255,.12);text-align:center;cursor:pointer;font-weight:500}
+.opt small{display:block;font-weight:400;font-size:11px;color:var(--muted);margin-top:2px}
+.opt.on{border-color:var(--gold);background:#17402e;color:var(--gold2)}
+.opt.dis{opacity:.45;cursor:not-allowed}
+.opt.dis small{color:var(--bad)}
+.zone{text-align:left}
+.zone b{display:block}
+/* guests */
+.gst{display:flex;align-items:center;gap:10px}
+.gst input{text-align:center;max-width:110px;font-weight:600;font-size:20px}
+.rbtn{width:44px;height:44px;border-radius:50%;border:1px solid var(--line);background:#0a1a13;font-size:24px;line-height:1;cursor:pointer;display:grid;place-items:center}
+.rbtn.plus{background:linear-gradient(180deg,var(--gold2),var(--gold));color:#201804;border-color:var(--gold);font-weight:700}
+.hint{font-size:12px;color:var(--muted);margin-top:6px}
+.hint b{color:var(--gold2)}
+/* mode cards */
+.mode{display:block;width:100%;text-align:left;padding:14px;border-radius:16px;border:1px solid rgba(255,255,255,.12);background:#0a1a13;cursor:pointer;margin-bottom:10px}
+.mode b{display:block;font-size:16px}
+.mode span{color:var(--muted);font-size:13px}
+.mode.on{border-color:var(--gold);background:#17402e}
+.compact .modehead,.compact .mode span{display:none}
+.compact .modes{display:flex;gap:8px;margin-top:0!important}
+.compact .mode{margin:0;flex:1;padding:10px 8px;text-align:center}
+.compact .mode b{font-size:14px}
+.compact .notice{margin-top:8px;font-size:12px;padding:8px 10px}
+.notice{border:1px dashed var(--gold);background:rgba(212,175,55,.08);border-radius:14px;padding:12px 14px;font-size:14px;margin-top:6px}
+.notice b{color:var(--gold2)}
+/* menu */
+.search{position:relative;margin:2px 0 10px}
+.search input{padding-left:40px}
+.search:before{content:'';position:absolute;left:14px;top:14px;width:12px;height:12px;border:2px solid var(--muted);border-radius:50%}
+.search:after{content:'';position:absolute;left:27px;top:27px;width:7px;height:2px;background:var(--muted);transform:rotate(45deg)}
+.tabs{display:flex;gap:7px;overflow-x:auto;padding:2px 0 10px;scrollbar-width:none;position:sticky;top:var(--tabtop,118px);z-index:20;background:linear-gradient(var(--bg) 70%,transparent)}
+.tabs::-webkit-scrollbar{display:none}
+.tab{flex:0 0 auto;border:1px solid rgba(255,255,255,.14);background:#0a1a13;border-radius:999px;padding:7px 13px;font-size:13px;cursor:pointer;white-space:nowrap}
+.tab.on{border-color:var(--gold);color:var(--gold2);background:#17402e}
+.tab i{font-style:normal;background:var(--gold);color:#1a1405;border-radius:99px;font-size:11px;padding:1px 6px;margin-left:5px;font-weight:700}
+.cat{background:var(--card);border:1px solid rgba(255,255,255,.07);border-radius:var(--r);margin:10px 0;overflow:hidden}
+.cat.hasq{border-color:rgba(212,175,55,.5)}
+.cat-h{width:100%;display:flex;align-items:center;gap:10px;background:none;border:0;padding:14px 14px;text-align:left;cursor:pointer;font-size:16px;font-weight:600}
+.cat-h .t{flex:1}
+.cat-h small{display:block;color:var(--muted);font-weight:400;font-size:12px}
+.cat-h .bd{background:var(--gold);color:#1a1405;border-radius:99px;font-size:12px;padding:1px 8px;font-weight:700;display:none}
+.cat.hasq .bd{display:inline-block}
+.cat-h .chev{width:10px;height:10px;border-right:2px solid var(--gold);border-bottom:2px solid var(--gold);transform:rotate(45deg);transition:transform .2s}
+.cat.open .chev{transform:rotate(-135deg)}
+.cat-b{display:none;padding:0 12px 8px}
+.cat.open .cat-b{display:block}
+.cols{display:none}
+@media(min-width:560px){
+  .cols{display:grid;grid-template-columns:1fr 90px 120px 90px;gap:8px;color:var(--muted);font-size:12px;padding:0 4px 6px}
+  .item{grid-template-columns:1fr 90px 120px 90px!important;grid-template-areas:"main price step sub"!important}
+  .it-price,.it-sub{text-align:right}
+}
+.item{display:grid;grid-template-columns:1fr auto;grid-template-areas:"main step" "price sub";gap:4px 10px;align-items:center;padding:11px 4px;border-top:1px solid rgba(255,255,255,.06)}
+.item.on{background:linear-gradient(90deg,rgba(212,175,55,.09),transparent)}
+.it-main{grid-area:main;min-width:0}
+.it-name{font-weight:600;font-size:15px}
+.tag{display:inline-block;font-size:11px;color:var(--muted);background:#0a1a13;border:1px solid rgba(255,255,255,.08);border-radius:99px;padding:1px 8px;margin:3px 4px 0 0}
+.it-price{grid-area:price;color:var(--gold2);font-size:14px}
+.it-price small{color:var(--muted)}
+.it-sub{grid-area:sub;text-align:right;color:var(--muted);font-size:14px}
+.item.on .it-sub{color:var(--text);font-weight:600}
+.step{grid-area:step;display:flex;align-items:center;justify-self:end;background:#08140e;border:1px solid rgba(255,255,255,.12);border-radius:999px;padding:3px}
+.step button{width:34px;height:34px;border-radius:50%;border:0;background:#12301f;font-size:20px;line-height:1;cursor:pointer;color:var(--text)}
+.step button.p{background:linear-gradient(180deg,var(--gold2),var(--gold));color:#201804;font-weight:700}
+.step .q{min-width:34px;text-align:center;font-weight:600;font-size:16px}
+.empty{color:var(--muted);text-align:center;padding:24px 0}
+/* summary */
+.row{display:flex;justify-content:space-between;gap:12px;padding:7px 0;border-bottom:1px solid rgba(255,255,255,.06);font-size:14px}
+.row:last-child{border-bottom:0}
+.row span:first-child{color:var(--muted)}
+.row b{text-align:right}
+.total{display:flex;justify-content:space-between;align-items:baseline;font-size:18px;font-weight:700;padding-top:10px}
+.total b{color:var(--gold2);font-family:Georgia,'Times New Roman',serif;font-size:24px}
+.qr{display:block;margin:12px auto;width:min(300px,86%);border-radius:14px;border:3px solid var(--gold);background:#fff}
+.qrph{height:200px;display:grid;place-items:center;color:var(--muted)}
+.chk{display:flex;gap:10px;align-items:flex-start;margin-top:12px;font-size:14px}
+.chk input{width:22px;height:22px;accent-color:var(--gold);margin-top:1px;flex:0 0 auto}
+/* buttons / bottom bar */
+.bar{position:fixed;left:0;right:0;bottom:0;z-index:40;background:linear-gradient(transparent,rgba(6,18,13,.97) 28%);padding:22px 0 calc(12px + env(safe-area-inset-bottom))}
+.bar-in{max-width:640px;margin:0 auto;padding:0 14px;display:flex;gap:10px}
+.btn{flex:1;border-radius:999px;padding:14px 18px;font-size:16px;font-weight:600;cursor:pointer;border:1px solid var(--line);background:#12301f;color:var(--text)}
+.btn.gold{background:linear-gradient(180deg,var(--gold2),var(--gold));color:#1f1703;border-color:var(--gold);box-shadow:0 6px 20px rgba(212,175,55,.25)}
+.btn.ghost{flex:0 0 auto;background:transparent}
+.btn{min-width:0;white-space:nowrap}
+@media(max-width:359px){.cartbtn>span:first-child{display:none}.steps div{font-size:11px;padding:6px 2px}.btn{padding:13px 12px;font-size:14px}.bar-in{padding:0 10px;gap:8px}.cartbtn{padding:6px 10px;font-size:13px}}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.banner{margin:12px 0;border-radius:14px;padding:12px 14px;font-size:14px;display:none}
+.banner.show{display:block}
+.banner.bad{background:rgba(255,123,107,.12);border:1px solid rgba(255,123,107,.5);color:#ffc6bd}
+.sp{display:inline-block;width:16px;height:16px;border:2px solid rgba(255,255,255,.3);border-top-color:var(--gold2);border-radius:50%;animation:spin .8s linear infinite;vertical-align:-3px;margin-right:6px}
+@keyframes spin{to{transform:rotate(360deg)}}
+/* cart sheet */
+.ov{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:50;display:none}
+.ov.show{display:block}
+.sheet{position:fixed;left:0;right:0;bottom:0;z-index:60;max-width:640px;margin:0 auto;background:var(--card2);border:1px solid var(--gold);border-radius:22px 22px 0 0;max-height:78vh;display:none;flex-direction:column}
+.sheet.show{display:flex}
+.sheet-h{display:flex;justify-content:space-between;align-items:center;padding:14px 16px;border-bottom:1px solid var(--line);font-weight:600;font-size:17px}
+.sheet-b{overflow:auto;padding:4px 14px}
+.sheet-f{padding:12px 16px calc(14px + env(safe-area-inset-bottom));border-top:1px solid var(--line)}
+.x{background:none;border:0;font-size:26px;color:var(--muted);cursor:pointer}
+.ok-mark{width:72px;height:72px;border-radius:50%;background:rgba(76,195,138,.15);border:2px solid var(--ok);display:grid;place-items:center;margin:6px auto 10px;font-size:36px;color:var(--ok)}
+.code{font-family:Georgia,'Times New Roman',serif;font-size:30px;color:var(--gold2);letter-spacing:.06em;text-align:center;margin:6px 0 2px}
+.center{text-align:center}
+.hide{display:none!important}
+</style>
+</head>
+<body>
+<div class="top"><div class="top-in">
+  <div class="top-row">
+    <div class="brand" id="brand">MANA<small id="brandSub"></small></div>
+    <button class="cartbtn" id="cartBtn" type="button" aria-label="&#xE14;&#xE39;&#xE15;&#xE30;&#xE01;&#xE23;&#xE49;&#xE32;"><span>&#xE14;&#xE39;&#xE15;&#xE30;&#xE01;&#xE23;&#xE49;&#xE32;</span><span class="cnt" id="cartCnt">0</span><b id="cartTotal">&#xE3F;0</b></button>
+  </div>
+  <div class="steps" id="steps"><div data-s="1">1 &#xE08;&#xE2D;&#xE07;&#xE42;&#xE15;&#xE4A;&#xE30;</div><div data-s="2">2 &#xE2D;&#xE32;&#xE2B;&#xE32;&#xE23;</div><div data-s="3">3 &#xE22;&#xE37;&#xE19;&#xE22;&#xE31;&#xE19;</div></div>
+  <div class="prog" id="prog"><div class="bar"><i id="progBar"></i></div><div class="txt"><span id="progL"></span><span id="progR"></span></div></div>
+</div></div>
+
+<div class="wrap" id="app">
+
+<!-- STEP 1 -->
+<section id="s1">
+  <div class="card gold">
+    <div class="eyebrow" id="eyebrow">MANA</div>
+    <h1>&#xE08;&#xE2D;&#xE07;&#xE42;&#xE15;&#xE4A;&#xE30; &amp; &#xE2A;&#xE31;&#xE48;&#xE07;&#xE2D;&#xE32;&#xE2B;&#xE32;&#xE23;&#xE25;&#xE48;&#xE27;&#xE07;&#xE2B;&#xE19;&#xE49;&#xE32;</h1>
+    <div class="sub">&#xE40;&#xE25;&#xE37;&#xE2D;&#xE01;&#xE27;&#xE31;&#xE19; &#xE40;&#xE27;&#xE25;&#xE32; &#xE41;&#xE25;&#xE30;&#xE08;&#xE33;&#xE19;&#xE27;&#xE19;&#xE1C;&#xE39;&#xE49;&#xE43;&#xE0A;&#xE49;&#xE1A;&#xE23;&#xE34;&#xE01;&#xE32;&#xE23; &#xE23;&#xE30;&#xE1A;&#xE1A;&#xE41;&#xE2A;&#xE14;&#xE07;&#xE40;&#xE09;&#xE1E;&#xE32;&#xE30;&#xE23;&#xE2D;&#xE1A;&#xE17;&#xE35;&#xE48;&#xE22;&#xE31;&#xE07;&#xE27;&#xE48;&#xE32;&#xE07;&#xE41;&#xE1A;&#xE1A;&#xE40;&#xE23;&#xE35;&#xE22;&#xE25;&#xE44;&#xE17;&#xE21;&#xE4C;<br>Choose date, time and party size. Only live availability is shown.</div>
+    <div class="chips" id="infoChips"></div>
+    <div class="stats">
+      <div class="stat hl"><span>&#xE27;&#xE31;&#xE19;&#xE17;&#xE35;&#xE48;</span><b id="stDate">-</b></div>
+      <div class="stat"><span>&#xE23;&#xE2D;&#xE1A;&#xE40;&#xE27;&#xE25;&#xE32;</span><b id="stSlot">-</b></div>
+      <div class="stat"><span>&#xE1C;&#xE39;&#xE49;&#xE43;&#xE0A;&#xE49;&#xE1A;&#xE23;&#xE34;&#xE01;&#xE32;&#xE23;</span><b id="stGuests">-</b></div>
+      <div class="stat"><span id="stUnitL">&#xE42;&#xE15;&#xE4A;&#xE30;&#xE17;&#xE35;&#xE48;&#xE43;&#xE0A;&#xE49;</span><b id="stUnit">-</b></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>&#xE02;&#xE49;&#xE2D;&#xE21;&#xE39;&#xE25;&#xE1C;&#xE39;&#xE49;&#xE08;&#xE2D;&#xE07; <span class="sub">Your details</span></h2>
+    <label class="f" for="fName">&#xE0A;&#xE37;&#xE48;&#xE2D;-&#xE19;&#xE32;&#xE21;&#xE2A;&#xE01;&#xE38;&#xE25; / Full name <em>*</em></label>
+    <input type="text" id="fName" autocomplete="name" maxlength="80" placeholder="&#xE40;&#xE0A;&#xE48;&#xE19; &#xE2A;&#xE21;&#xE0A;&#xE32;&#xE22; &#xE43;&#xE08;&#xE14;&#xE35;">
+    <div class="err" id="eName"></div>
+    <label class="f" for="fPhone">&#xE40;&#xE1A;&#xE2D;&#xE23;&#xE4C;&#xE42;&#xE17;&#xE23;&#xE28;&#xE31;&#xE1E;&#xE17;&#xE4C; / Phone <em>*</em></label>
+    <input type="tel" id="fPhone" inputmode="numeric" autocomplete="tel" maxlength="14" placeholder="0812345678">
+    <div class="err" id="ePhone"></div>
+    <label class="f" for="fLine">LINE ID (&#xE44;&#xE21;&#xE48;&#xE1A;&#xE31;&#xE07;&#xE04;&#xE31;&#xE1A; / optional)</label>
+    <input type="text" id="fLine" maxlength="60" autocomplete="off">
+    <div class="hp"><label>Website <input type="text" id="fHp" tabindex="-1" autocomplete="off"></label></div>
+  </div>
+
+  <div class="card">
+    <h2>&#xE27;&#xE31;&#xE19;&#xE17;&#xE35;&#xE48; &amp; &#xE23;&#xE2D;&#xE1A;&#xE40;&#xE27;&#xE25;&#xE32; <span class="sub">Date &amp; time</span></h2>
+    <div class="dates" id="dates"></div>
+    <div class="err" id="eDate"></div>
+    <div class="sub" style="margin:2px 0 8px">&#xE23;&#xE2D;&#xE1A;&#xE40;&#xE27;&#xE25;&#xE32; / Time slot</div>
+    <div class="grid slots" id="slots"></div>
+    <div class="err" id="eSlot"></div>
+  </div>
+
+  <div class="card">
+    <h2>&#xE08;&#xE33;&#xE19;&#xE27;&#xE19;&#xE1C;&#xE39;&#xE49;&#xE43;&#xE0A;&#xE49;&#xE1A;&#xE23;&#xE34;&#xE01;&#xE32;&#xE23; <span class="sub">Guests</span></h2>
+    <div class="gst">
+      <button type="button" class="rbtn" id="gMinus" aria-label="&#xE25;&#xE14;">&minus;</button>
+      <input type="number" id="fGuests" inputmode="numeric" min="1" value="2">
+      <button type="button" class="rbtn plus" id="gPlus" aria-label="&#xE40;&#xE1E;&#xE34;&#xE48;&#xE21;">+</button>
+    </div>
+    <div class="hint" id="gHint"></div>
+    <div class="err" id="eGuests"></div>
+    <h2 style="margin-top:18px">&#xE42;&#xE0B;&#xE19;&#xE17;&#xE35;&#xE48;&#xE19;&#xE31;&#xE48;&#xE07; <span class="sub">Seating zone</span></h2>
+    <div class="grid" id="zones"></div>
+    <div class="err" id="eZone"></div>
+    <label class="f" for="fSpecial">&#xE04;&#xE27;&#xE32;&#xE21;&#xE15;&#xE49;&#xE2D;&#xE07;&#xE01;&#xE32;&#xE23;&#xE1E;&#xE34;&#xE40;&#xE28;&#xE29; / Special requests</label>
+    <textarea id="fSpecial" maxlength="500" placeholder="&#xE40;&#xE0A;&#xE48;&#xE19; &#xE40;&#xE01;&#xE49;&#xE32;&#xE2D;&#xE35;&#xE49;&#xE40;&#xE14;&#xE47;&#xE01;, &#xE09;&#xE25;&#xE2D;&#xE07;&#xE27;&#xE31;&#xE19;&#xE40;&#xE01;&#xE34;&#xE14;"></textarea>
+  </div>
+</section>
+
+<!-- STEP 2 -->
+<section id="s2" class="hide">
+  <div class="card gold" id="modeCard">
+    <div class="modehead"><div class="eyebrow">&#xE2D;&#xE32;&#xE2B;&#xE32;&#xE23; / Food</div>
+    <h1 style="font-size:22px">&#xE2A;&#xE31;&#xE48;&#xE07;&#xE2D;&#xE32;&#xE2B;&#xE32;&#xE23;&#xE25;&#xE48;&#xE27;&#xE07;&#xE2B;&#xE19;&#xE49;&#xE32;&#xE2B;&#xE23;&#xE37;&#xE2D;&#xE44;&#xE21;&#xE48;?</h1>
+    <div class="sub">Pre-order food?</div></div>
+    <div class="modes" style="margin-top:12px">
+      <button type="button" class="mode" id="modeYes"><b>&#xE2A;&#xE31;&#xE48;&#xE07;&#xE2D;&#xE32;&#xE2B;&#xE32;&#xE23;&#xE25;&#xE48;&#xE27;&#xE07;&#xE2B;&#xE19;&#xE49;&#xE32; (&#xE0A;&#xE33;&#xE23;&#xE30;&#xE21;&#xE31;&#xE14;&#xE08;&#xE33;)</b><span>&#xE40;&#xE25;&#xE37;&#xE2D;&#xE01;&#xE40;&#xE21;&#xE19;&#xE39;&#xE44;&#xE14;&#xE49;&#xE40;&#xE25;&#xE22; &#xE2D;&#xE32;&#xE2B;&#xE32;&#xE23;&#xE1E;&#xE23;&#xE49;&#xE2D;&#xE21;&#xE40;&#xE21;&#xE37;&#xE48;&#xE2D;&#xE21;&#xE32;&#xE16;&#xE36;&#xE07; &middot; &#xE15;&#xE49;&#xE2D;&#xE07;&#xE42;&#xE2D;&#xE19;&#xE21;&#xE31;&#xE14;&#xE08;&#xE33; / Pre-order, deposit required</span></button>
+      <button type="button" class="mode" id="modeNo"><b>&#xE44;&#xE21;&#xE48;&#xE2A;&#xE31;&#xE48;&#xE07;&#xE2D;&#xE32;&#xE2B;&#xE32;&#xE23;&#xE25;&#xE48;&#xE27;&#xE07;&#xE2B;&#xE19;&#xE49;&#xE32;</b><span>&#xE2A;&#xE31;&#xE48;&#xE07;&#xE17;&#xE35;&#xE48;&#xE23;&#xE49;&#xE32;&#xE19;&#xE44;&#xE14;&#xE49; &#xE44;&#xE21;&#xE48;&#xE15;&#xE49;&#xE2D;&#xE07;&#xE21;&#xE31;&#xE14;&#xE08;&#xE33; / Order at the restaurant, no deposit</span></button>
+    </div>
+    <div class="notice" id="minNotice"></div>
+  </div>
+  <div id="menuBox" class="hide">
+    <div class="search"><input type="text" id="fSearch" placeholder="&#xE04;&#xE49;&#xE19;&#xE2B;&#xE32;&#xE40;&#xE21;&#xE19;&#xE39; / Search menu" autocomplete="off"></div>
+    <div class="tabs" id="tabs"></div>
+    <div class="cols"><span>&#xE23;&#xE32;&#xE22;&#xE01;&#xE32;&#xE23;</span><span style="text-align:right">&#xE23;&#xE32;&#xE04;&#xE32;/&#xE2B;&#xE19;&#xE48;&#xE27;&#xE22;</span><span style="text-align:center">&#xE08;&#xE33;&#xE19;&#xE27;&#xE19;</span><span style="text-align:right">&#xE23;&#xE27;&#xE21;</span></div>
+    <div id="menu"></div>
+    <div class="empty hide" id="noRes">&#xE44;&#xE21;&#xE48;&#xE1E;&#xE1A;&#xE40;&#xE21;&#xE19;&#xE39;&#xE17;&#xE35;&#xE48;&#xE04;&#xE49;&#xE19;&#xE2B;&#xE32; / No results</div>
+  </div>
+</section>
+
+<!-- STEP 3 -->
+<section id="s3" class="hide">
+  <div class="card gold">
+    <div class="eyebrow">&#xE15;&#xE23;&#xE27;&#xE08;&#xE2A;&#xE2D;&#xE1A; &amp; &#xE22;&#xE37;&#xE19;&#xE22;&#xE31;&#xE19;</div>
+    <h1 style="font-size:22px">&#xE2A;&#xE23;&#xE38;&#xE1B;&#xE01;&#xE32;&#xE23;&#xE08;&#xE2D;&#xE07;</h1>
+    <div id="sumBox" style="margin-top:8px"></div>
+  </div>
+  <div class="card" id="orderCard">
+    <h2>&#xE23;&#xE32;&#xE22;&#xE01;&#xE32;&#xE23;&#xE2D;&#xE32;&#xE2B;&#xE32;&#xE23; <span class="sub">Your order</span></h2>
+    <div id="orderBox"></div>
+  </div>
+  <div class="card" id="depCard">
+    <h2>&#xE0A;&#xE33;&#xE23;&#xE30;&#xE21;&#xE31;&#xE14;&#xE08;&#xE33; <span class="sub">Deposit by QR</span></h2>
+    <div class="notice" id="depInfo"></div>
+    <div id="qrBox" class="qrph"><span class="sp"></span>&#xE01;&#xE33;&#xE25;&#xE31;&#xE07;&#xE42;&#xE2B;&#xE25;&#xE14; QR...</div>
+    <div class="sub center">&#xE0A;&#xE37;&#xE48;&#xE2D;&#xE1A;&#xE31;&#xE0D;&#xE0A;&#xE35;: MANA (&#xE2D;&#xE25;&#xE34;&#xE29;&#xE32; &#xE43;&#xE1A;&#xE01;&#xE27;&#xE49;&#xE32;&#xE07;) &middot; &#xE23;&#xE31;&#xE1A;&#xE40;&#xE07;&#xE34;&#xE19;&#xE44;&#xE14;&#xE49;&#xE08;&#xE32;&#xE01;&#xE17;&#xE38;&#xE01;&#xE18;&#xE19;&#xE32;&#xE04;&#xE32;&#xE23;</div>
+    <label class="f" for="fAmount">&#xE22;&#xE2D;&#xE14;&#xE17;&#xE35;&#xE48;&#xE42;&#xE2D;&#xE19; / Amount transferred (THB) <em>*</em></label>
+    <input type="number" id="fAmount" inputmode="decimal" min="1" placeholder="0">
+    <div class="err" id="eAmount"></div>
+    <label class="f" for="fRef">&#xE40;&#xE27;&#xE25;&#xE32;&#xE17;&#xE35;&#xE48;&#xE42;&#xE2D;&#xE19;&#xE41;&#xE25;&#xE30;&#xE40;&#xE25;&#xE02;&#xE2D;&#xE49;&#xE32;&#xE07;&#xE2D;&#xE34;&#xE07;&#xE23;&#xE32;&#xE22;&#xE01;&#xE32;&#xE23; / Transfer time &amp; ref no. <em>*</em></label>
+    <input type="text" id="fRef" maxlength="120" placeholder="&#xE40;&#xE0A;&#xE48;&#xE19; 14:05 / 0123456789">
+    <div class="err" id="eRef"></div>
+    <label class="chk"><input type="checkbox" id="fConfirm"><span>&#xE09;&#xE31;&#xE19;&#xE44;&#xE14;&#xE49;&#xE42;&#xE2D;&#xE19;&#xE40;&#xE07;&#xE34;&#xE19;&#xE21;&#xE31;&#xE14;&#xE08;&#xE33;&#xE41;&#xE25;&#xE49;&#xE27; / I have transferred the deposit</span></label>
+    <div class="err" id="eConfirm"></div>
+    <div class="notice" style="margin-top:12px">&#xE2B;&#xE25;&#xE31;&#xE07;&#xE2A;&#xE48;&#xE07;&#xE01;&#xE32;&#xE23;&#xE08;&#xE2D;&#xE07; &#xE01;&#xE23;&#xE38;&#xE13;&#xE32;&#xE2A;&#xE48;&#xE07;&#xE2A;&#xE25;&#xE34;&#xE1B;&#xE42;&#xE2D;&#xE19;&#xE40;&#xE07;&#xE34;&#xE19;&#xE43;&#xE2B;&#xE49;&#xE23;&#xE49;&#xE32;&#xE19;&#xE17;&#xE32;&#xE07; LINE &#xE40;&#xE1E;&#xE37;&#xE48;&#xE2D;&#xE22;&#xE37;&#xE19;&#xE22;&#xE31;&#xE19;<br>After booking, please send your transfer slip to us on LINE.</div>
+  </div>
+  <div class="card hide" id="noDepCard">
+    <h2>&#xE44;&#xE21;&#xE48;&#xE15;&#xE49;&#xE2D;&#xE07;&#xE21;&#xE31;&#xE14;&#xE08;&#xE33; <span class="sub">No deposit</span></h2>
+    <div class="notice" id="noDepInfo"></div>
+  </div>
+  <div class="banner bad" id="submitErr"></div>
+</section>
+
+<!-- SUCCESS -->
+<section id="done" class="hide">
+  <div class="card gold center">
+    <div class="ok-mark">&#10003;</div>
+    <h1 style="font-size:23px">&#xE2A;&#xE48;&#xE07;&#xE01;&#xE32;&#xE23;&#xE08;&#xE2D;&#xE07;&#xE40;&#xE23;&#xE35;&#xE22;&#xE1A;&#xE23;&#xE49;&#xE2D;&#xE22;</h1>
+    <div class="sub">Booking received</div>
+    <div class="code" id="doneCode"></div>
+    <div class="sub">&#xE23;&#xE2B;&#xE31;&#xE2A;&#xE01;&#xE32;&#xE23;&#xE08;&#xE2D;&#xE07; / Booking code</div>
+  </div>
+  <div class="card"><div id="doneBox"></div></div>
+  <div class="card" id="doneNote"></div>
+  <button class="btn" type="button" id="againBtn" style="width:100%">&#xE08;&#xE2D;&#xE07;&#xE43;&#xE2B;&#xE21;&#xE48; / New booking</button>
+</section>
+
+</div>
+
+<div class="bar" id="bar"><div class="bar-in">
+  <button class="btn ghost" id="backBtn" type="button">&larr; &#xE22;&#xE49;&#xE2D;&#xE19;&#xE01;&#xE25;&#xE31;&#xE1A;</button>
+  <button class="btn gold" id="nextBtn" type="button">&#xE16;&#xE31;&#xE14;&#xE44;&#xE1B; &rarr;</button>
+</div></div>
+
+<div class="ov" id="ov"></div>
+<div class="sheet" id="sheet">
+  <div class="sheet-h"><span>&#xE15;&#xE30;&#xE01;&#xE23;&#xE49;&#xE32;&#xE02;&#xE2D;&#xE07;&#xE04;&#xE38;&#xE13; / Your cart</span><button class="x" id="sheetX" type="button" aria-label="&#xE1B;&#xE34;&#xE14;">&times;</button></div>
+  <div class="sheet-b" id="sheetB"></div>
+  <div class="sheet-f"><div class="total"><span>&#xE23;&#xE27;&#xE21;&#xE17;&#xE31;&#xE49;&#xE07;&#xE2B;&#xE21;&#xE14;</span><b id="sheetTotal">&#xE3F;0</b></div><button class="btn gold" id="sheetOk" type="button" style="width:100%;margin-top:10px">&#xE15;&#xE01;&#xE25;&#xE07;</button></div>
+</div>
+
+<script>var BOOT = <?!= bootJson ?>;</script>
+<script>
+(function () {
+  'use strict';
+  var B = BOOT;
+  var MONTHS = ['\u0e21.\u0e04.', '\u0e01.\u0e1e.', '\u0e21\u0e35.\u0e04.', '\u0e40\u0e21.\u0e22.', '\u0e1e.\u0e04.', '\u0e21\u0e34.\u0e22.', '\u0e01.\u0e04.', '\u0e2a.\u0e04.', '\u0e01.\u0e22.', '\u0e15.\u0e04.', '\u0e1e.\u0e22.', '\u0e18.\u0e04.'];
+  var DOWS = ['\u0e2d\u0e32.', '\u0e08.', '\u0e2d.', '\u0e1e.', '\u0e1e\u0e24.', '\u0e28.', '\u0e2a.'];
+  var S = {
+    step: 1, iso: B.today, slot: '', zone: B.zones.length === 1 ? B.zones[0].key : '', guests: 2,
+    preorder: null, cart: {}, avail: null, availErr: '', loading: false, qr: '', submitting: false, openCats: {}, q: ''
+  };
+  var ITEMS = {};
+  B.menu.forEach(function (c) { c.items.forEach(function (it) { ITEMS[it[0]] = { id: it[0], th: it[1], en: it[2], zh: it[3], price: it[4], cat: c.id }; }); });
+
+  function $(id) { return document.getElementById(id); }
+  function esc(s) { return String(s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
+  function money(n) { return '\u0e3f' + Number(n).toLocaleString('en-US'); }
+  function minSpend() { return S.guests <= 2 ? 300 : 500; }
+  function tablesFor(g) { return Math.max(1, Math.ceil(g / 4)); }
+  function dmy(iso) { var p = iso.split('-'); return (+p[2]) + '/' + (+p[1]) + '/' + p[0]; }
+  function dateLong(iso) { var p = iso.split('-'); return (+p[2]) + ' ' + MONTHS[+p[1] - 1] + ' ' + p[0]; }
+  function zoneObj(k) { for (var i = 0; i < B.zones.length; i++) if (B.zones[i].key === k) return B.zones[i]; return null; }
+  function foodTotal() { var t = 0; Object.keys(S.cart).forEach(function (id) { t += S.cart[id] * ITEMS[id].price; }); return t; }
+  function itemCount() { var t = 0; Object.keys(S.cart).forEach(function (id) { t += S.cart[id]; }); return t; }
+
+  function run(name, args, ok, fail) {
+    try {
+      if (!window.google || !google.script || !google.script.run) throw new Error('no google.script.run');
+      var r = google.script.run.withSuccessHandler(ok).withFailureHandler(function (e) { fail(e && e.message ? e.message : String(e)); });
+      r[name].apply(r, args);
+    } catch (err) { fail(String(err && err.message ? err.message : err)); }
+  }
+
+  /* ---------- header ---------- */
+  function renderHeader() {
+    $('brand').firstChild.nodeValue = 'MANA';
+    $('brandSub').textContent = B.name;
+    $('eyebrow').textContent = B.name;
+    var t = foodTotal();
+    $('steps').style.display = S.step === 4 ? 'none' : '';
+    $('cartBtn').style.display = S.step === 4 ? 'none' : '';
+    $('cartTotal').textContent = money(t);
+    $('cartCnt').textContent = itemCount();
+    Array.prototype.forEach.call($('steps').children, function (d) {
+      var n = +d.getAttribute('data-s');
+      d.className = n === S.step ? 'on' : (n < S.step ? 'done' : '');
+    });
+    var prog = $('prog');
+    if (S.step >= 2 && S.preorder) {
+      prog.className = 'prog show';
+      var min = minSpend(), pct = Math.min(100, Math.round(t / min * 100));
+      $('progBar').style.width = pct + '%';
+      $('progL').innerHTML = t >= min ? '\u2713 \u0e16\u0e36\u0e07\u0e02\u0e31\u0e49\u0e19\u0e15\u0e48\u0e33\u0e41\u0e25\u0e49\u0e27' : '\u0e40\u0e2b\u0e25\u0e37\u0e2d\u0e2d\u0e35\u0e01 <b>' + money(min - t) + '</b> \u0e16\u0e36\u0e07\u0e02\u0e31\u0e49\u0e19\u0e15\u0e48\u0e33';
+      $('progR').innerHTML = '\u0e02\u0e31\u0e49\u0e19\u0e15\u0e48\u0e33 <b>' + money(min) + '</b> (' + S.guests + ' \u0e17\u0e48\u0e32\u0e19)';
+    } else prog.className = 'prog';
+    var top = document.querySelector('.top');
+    document.documentElement.style.setProperty('--tabtop', (top ? top.offsetHeight : 118) + 'px');
+  }
+
+  function renderStats() {
+    $('stDate').textContent = S.iso ? dateLong(S.iso) : '-';
+    $('stSlot').textContent = S.slot ? S.slot.replace(/ /g, '') : '-';
+    $('stGuests').textContent = S.guests + ' \u0e17\u0e48\u0e32\u0e19';
+    var z = zoneObj(S.zone);
+    var unitTables = !z || z.unit === 'tables';
+    $('stUnitL').textContent = unitTables ? '\u0e42\u0e15\u0e4a\u0e30\u0e17\u0e35\u0e48\u0e43\u0e0a\u0e49' : '\u0e17\u0e35\u0e48\u0e19\u0e31\u0e48\u0e07\u0e17\u0e35\u0e48\u0e43\u0e0a\u0e49';
+    $('stUnit').textContent = unitTables ? '~' + tablesFor(S.guests) + ' \u0e42\u0e15\u0e4a\u0e30' : S.guests + ' \u0e17\u0e35\u0e48\u0e19\u0e31\u0e48\u0e07';
+  }
+
+  function renderInfoChips() {
+    var c = [];
+    if (B.branch === 'ratch') {
+      c.push('<span class="pill green">\u0e2b\u0e49\u0e2d\u0e07\u0e41\u0e2d\u0e23\u0e4c 15 \u0e42\u0e15\u0e4a\u0e30</span>', '<span class="pill">\u0e15\u0e48\u0e2d\u0e42\u0e15\u0e4a\u0e30\u0e44\u0e14\u0e49\u0e2a\u0e39\u0e07\u0e2a\u0e38\u0e14 4 \u0e42\u0e15\u0e4a\u0e30 = 18 \u0e17\u0e48\u0e32\u0e19</span>', '<span class="pill">\u0e23\u0e27\u0e21\u0e44\u0e21\u0e48\u0e40\u0e01\u0e34\u0e19 50 \u0e17\u0e48\u0e32\u0e19\u0e15\u0e48\u0e2d\u0e23\u0e2d\u0e1a</span>');
+    } else {
+      c.push('<span class="pill green">3 \u0e42\u0e0b\u0e19\u0e17\u0e35\u0e48\u0e19\u0e31\u0e48\u0e07</span>', '<span class="pill">\u0e08\u0e2d\u0e07\u0e25\u0e48\u0e27\u0e07\u0e2b\u0e19\u0e49\u0e32 30 \u0e27\u0e31\u0e19</span>');
+    }
+    c.push('<span class="pill">\u0e21\u0e31\u0e14\u0e08\u0e33\u0e40\u0e09\u0e1e\u0e32\u0e30\u0e1c\u0e39\u0e49\u0e2a\u0e31\u0e48\u0e07\u0e2d\u0e32\u0e2b\u0e32\u0e23\u0e25\u0e48\u0e27\u0e07\u0e2b\u0e19\u0e49\u0e32</span>');
+    $('infoChips').innerHTML = c.join('');
+  }
+
+  /* ---------- availability ---------- */
+  function fetchAvail(keepSlot) {
+    S.loading = true; S.availErr = '';
+    renderDates(); renderSlots(); renderZones();
+    var g = S.guests, iso = S.iso, token = (S.token = (S.token || 0) + 1);
+    run('webGetAvailability', [B.branch, iso, g], function (r) {
+      if (token !== S.token) return;
+      S.loading = false;
+      if (!r || !r.ok) { S.availErr = (r && r.error) || '\u0e42\u0e2b\u0e25\u0e14\u0e23\u0e2d\u0e1a\u0e27\u0e48\u0e32\u0e07\u0e44\u0e21\u0e48\u0e2a\u0e33\u0e40\u0e23\u0e47\u0e08'; S.avail = null; }
+      else {
+        S.avail = r;
+        if (r.date !== S.iso) S.iso = r.date;
+        var cur = null;
+        r.slots.forEach(function (s) { if (s.slot === S.slot) cur = s; });
+        if (!cur || cur.state !== 'open') { S.slot = ''; if (B.zones.length > 1) S.zone = ''; }
+        else if (B.zones.length > 1) {
+          var zs = null; cur.zones.forEach(function (z) { if (z.key === S.zone) zs = z; });
+          if (!zs || zs.state !== 'open') S.zone = '';
+        }
+      }
+      renderDates(); renderSlots(); renderZones(); renderStats();
+    }, function (msg) {
+      if (token !== S.token) return;
+      S.loading = false; S.availErr = '\u0e40\u0e0a\u0e37\u0e48\u0e2d\u0e21\u0e15\u0e48\u0e2d\u0e44\u0e21\u0e48\u0e44\u0e14\u0e49 / ' + msg; S.avail = null;
+      renderDates(); renderSlots(); renderZones();
+    });
+  }
+
+  function renderDates() {
+    var open = {};
+    if (S.avail) S.avail.days.forEach(function (d) { open[d.iso] = d.open; });
+    var h = B.dates.map(function (d) {
+      var p = d.iso.split('-'), isOpen = S.avail ? open[d.iso] !== false : true;
+      var cls = 'day' + (d.iso === S.iso ? ' on' : '') + (isOpen ? '' : ' full');
+      return '<div class="' + cls + '" data-iso="' + d.iso + '"><small>' + (d.iso === B.today ? '\u0e27\u0e31\u0e19\u0e19\u0e35\u0e49' : DOWS[d.dow]) + '</small><b>' + (+p[2]) + '</b><small>' + MONTHS[+p[1] - 1] + '</small></div>';
+    }).join('');
+    $('dates').innerHTML = h;
+    var on = $('dates').querySelector('.on');
+    if (on && !S.scrolledDates) { S.scrolledDates = true; }
+  }
+
+  function renderSlots() {
+    var el = $('slots');
+    if (S.loading && !S.avail) { el.innerHTML = '<div class="sub" style="grid-column:1/-1"><span class="sp"></span>\u0e01\u0e33\u0e25\u0e31\u0e07\u0e42\u0e2b\u0e25\u0e14\u0e23\u0e2d\u0e1a\u0e27\u0e48\u0e32\u0e07...</div>'; return; }
+    if (S.availErr) { el.innerHTML = '<div class="sub" style="grid-column:1/-1;color:var(--bad)">' + esc(S.availErr) + ' <a href="#" id="retry" style="color:var(--gold2)">\u0e25\u0e2d\u0e07\u0e43\u0e2b\u0e21\u0e48</a></div>'; return; }
+    if (!S.avail) { el.innerHTML = ''; return; }
+    el.innerHTML = S.avail.slots.map(function (s) {
+      var cls = 'opt' + (s.slot === S.slot ? ' on' : '') + (s.state === 'open' ? '' : ' dis');
+      var note = s.state === 'full' ? '\u0e40\u0e15\u0e47\u0e21' : s.state === 'nofit' ? '\u0e44\u0e21\u0e48\u0e1e\u0e2d\u0e2a\u0e33\u0e2b\u0e23\u0e31\u0e1a ' + S.guests + ' \u0e17\u0e48\u0e32\u0e19' : s.state === 'past' ? '\u0e1c\u0e48\u0e32\u0e19\u0e44\u0e1b\u0e41\u0e25\u0e49\u0e27' : '\u0e27\u0e48\u0e32\u0e07';
+      return '<div class="' + cls + '" data-slot="' + esc(s.slot) + '">' + esc(s.slot.replace(/ /g, '')) + '<small>' + note + '</small></div>';
+    }).join('');
+  }
+
+  function renderZones() {
+    var el = $('zones');
+    var cur = null;
+    if (S.avail) S.avail.slots.forEach(function (s) { if (s.slot === S.slot) cur = s; });
+    el.innerHTML = B.zones.map(function (z) {
+      var st = null;
+      if (cur) cur.zones.forEach(function (x) { if (x.key === z.key) st = x; });
+      var unit = z.unit === 'tables' ? '\u0e42\u0e15\u0e4a\u0e30' : '\u0e17\u0e35\u0e48\u0e19\u0e31\u0e48\u0e07';
+      var sm = !st ? '\u0e40\u0e25\u0e37\u0e2d\u0e01\u0e23\u0e2d\u0e1a\u0e40\u0e27\u0e25\u0e32\u0e01\u0e48\u0e2d\u0e19 / choose a slot first' : st.state === 'full' ? '\u0e40\u0e15\u0e47\u0e21' : st.state === 'nofit' ? '\u0e40\u0e2b\u0e25\u0e37\u0e2d ' + st.remaining + ' ' + unit + ' (\u0e44\u0e21\u0e48\u0e1e\u0e2d)' : '\u0e40\u0e2b\u0e25\u0e37\u0e2d ' + st.remaining + ' ' + unit;
+      var ok = st && st.state === 'open';
+      var cls = 'opt zone' + (z.key === S.zone ? ' on' : '') + (ok ? '' : ' dis');
+      return '<div class="' + cls + '" data-zone="' + z.key + '"><b>' + esc(z.label) + '</b><small style="color:' + (ok ? 'var(--muted)' : 'var(--bad)') + '">' + esc(sm) + '</small><small>' + esc(z.note) + '</small></div>';
+    }).join('');
+    if (B.branch === 'ratch' && cur && cur.zones[0].state === 'open') S.zone = B.zones[0].key;
+  }
+
+  function renderGuestHint() {
+    var t = tablesFor(S.guests);
+    var h = '\u0e43\u0e0a\u0e49\u0e1b\u0e23\u0e30\u0e21\u0e32\u0e13 <b>' + t + ' \u0e42\u0e15\u0e4a\u0e30</b> (4 \u0e17\u0e48\u0e32\u0e19/\u0e42\u0e15\u0e4a\u0e30)';
+    if (B.branch === 'ratch') h += ' &middot; \u0e08\u0e2d\u0e07\u0e44\u0e14\u0e49\u0e2a\u0e39\u0e07\u0e2a\u0e38\u0e14 ' + B.maxGuests + ' \u0e17\u0e48\u0e32\u0e19\u0e15\u0e48\u0e2d\u0e01\u0e32\u0e23\u0e08\u0e2d\u0e07 (\u0e15\u0e48\u0e2d\u0e44\u0e14\u0e49 4 \u0e42\u0e15\u0e4a\u0e30)';
+    else h += ' &middot; \u0e1a\u0e49\u0e32\u0e19\u0e1b\u0e34\u0e15\u0e34/Outdoor \u0e04\u0e34\u0e14\u0e15\u0e32\u0e21\u0e17\u0e35\u0e48\u0e19\u0e31\u0e48\u0e07';
+    $('gHint').innerHTML = h;
+  }
+
+  /* ---------- menu ---------- */
+  function buildMenu() {
+    var h = B.menu.map(function (c, i) {
+      var items = c.items.map(function (it) {
+        var tags = (it[2] ? '<span class="tag">' + esc(it[2]) + '</span>' : '') + (it[3] ? '<span class="tag">' + esc(it[3]) + '</span>' : '');
+        return '<div class="item" data-id="' + it[0] + '"><div class="it-main"><div class="it-name">' + esc(it[1]) + '</div><div>' + tags + '</div></div>' +
+          '<div class="it-price">' + money(it[4]) + ' <small>/ \u0e08\u0e32\u0e19</small></div>' +
+          '<div class="step"><button type="button" data-act="dec" aria-label="\u0e25\u0e14">&minus;</button><span class="q">0</span><button type="button" class="p" data-act="inc" aria-label="\u0e40\u0e1e\u0e34\u0e48\u0e21">+</button></div>' +
+          '<div class="it-sub">-</div></div>';
+      }).join('');
+      return '<section class="cat' + (i === 0 ? ' open' : '') + '" data-cat="' + c.id + '"><button type="button" class="cat-h"><span class="t">' + esc(c.th) + '<small>' + esc(c.en) + ' &middot; ' + c.items.length + ' \u0e23\u0e32\u0e22\u0e01\u0e32\u0e23</small></span><span class="bd">0</span><span class="chev"></span></button><div class="cat-b">' + items + '</div></section>';
+    }).join('');
+    $('menu').innerHTML = h;
+    $('tabs').innerHTML = B.menu.map(function (c) { return '<div class="tab" data-cat="' + c.id + '">' + esc(c.th) + '<i class="hide">0</i></div>'; }).join('');
+  }
+
+  function refreshItem(id) {
+    var q = S.cart[id] || 0, it = ITEMS[id];
+    var rows = document.querySelectorAll('.item[data-id="' + id + '"]');
+    Array.prototype.forEach.call(rows, function (row) {
+      row.className = 'item' + (q > 0 ? ' on' : '');
+      row.querySelector('.q').textContent = q;
+      row.querySelector('.it-sub').textContent = q > 0 ? money(q * it.price) : '-';
+    });
+    var cat = document.querySelector('.cat[data-cat="' + it.cat + '"]');
+    var n = 0;
+    B.menu.forEach(function (c) { if (c.id === it.cat) c.items.forEach(function (x) { n += S.cart[x[0]] || 0; }); });
+    if (cat) { cat.querySelector('.bd').textContent = n; cat.className = cat.className.replace(' hasq', '') + (n > 0 ? ' hasq' : ''); }
+    var tab = document.querySelector('.tab[data-cat="' + it.cat + '"] i');
+    if (tab) { tab.textContent = n; tab.className = n > 0 ? '' : 'hide'; }
+  }
+
+  function setQty(id, q) {
+    if (!ITEMS[id]) return;
+    q = Math.max(0, Math.min(99, q));
+    if (q === 0) delete S.cart[id]; else S.cart[id] = q;
+    refreshItem(id);
+    renderHeader();
+    if ($('sheet').className.indexOf('show') > -1) renderSheet();
+  }
+
+  function applySearch() {
+    var q = S.q.trim().toLowerCase(), any = false;
+    Array.prototype.forEach.call(document.querySelectorAll('.cat'), function (cat) {
+      var vis = 0;
+      Array.prototype.forEach.call(cat.querySelectorAll('.item'), function (row) {
+        var it = ITEMS[row.getAttribute('data-id')];
+        var hit = !q || (it.th + ' ' + it.en + ' ' + it.zh).toLowerCase().indexOf(q) > -1;
+        row.style.display = hit ? '' : 'none';
+        if (hit) vis++;
+      });
+      cat.style.display = vis ? '' : 'none';
+      if (q && vis) cat.classList.add('open');
+      if (vis) any = true;
+    });
+    $('noRes').className = 'empty' + (any ? ' hide' : '');
+  }
+
+  function openCat(id, scroll) {
+    var cat = document.querySelector('.cat[data-cat="' + id + '"]');
+    if (!cat) return;
+    cat.classList.add('open');
+    Array.prototype.forEach.call(document.querySelectorAll('.tab'), function (t) { t.classList.toggle('on', t.getAttribute('data-cat') === id); });
+    if (scroll) {
+      var top = document.querySelector('.top').offsetHeight + 56;
+      window.scrollTo({ top: cat.getBoundingClientRect().top + window.pageYOffset - top, behavior: 'smooth' });
+    }
+  }
+
+  /* ---------- cart sheet ---------- */
+  function renderSheet() {
+    var ids = Object.keys(S.cart);
+    $('sheetB').innerHTML = ids.length ? ids.map(function (id) {
+      var it = ITEMS[id], q = S.cart[id];
+      return '<div class="item on" data-id="' + id + '" style="grid-template-areas:\'main step\' \'price sub\'"><div class="it-main"><div class="it-name">' + esc(it.th) + '</div></div><div class="it-price">' + money(it.price) + ' x ' + q + '</div>' +
+        '<div class="step"><button type="button" data-act="dec">&minus;</button><span class="q">' + q + '</span><button type="button" class="p" data-act="inc">+</button></div><div class="it-sub">' + money(q * it.price) + '</div></div>';
+    }).join('') : '<div class="empty">\u0e22\u0e31\u0e07\u0e44\u0e21\u0e48\u0e44\u0e14\u0e49\u0e40\u0e25\u0e37\u0e2d\u0e01\u0e2d\u0e32\u0e2b\u0e32\u0e23 / Cart is empty</div>';
+    $('sheetTotal').textContent = money(foodTotal());
+  }
+  function showSheet(on) {
+    if (on) renderSheet();
+    $('sheet').className = 'sheet' + (on ? ' show' : '');
+    $('ov').className = 'ov' + (on ? ' show' : '');
+  }
+
+  /* ---------- steps ---------- */
+  function showStep(n) {
+    S.step = n;
+    ['s1', 's2', 's3', 'done'].forEach(function (id) { $(id).className = 'hide'; });
+    $(n === 4 ? 'done' : 's' + n).className = '';
+    $('bar').className = n === 4 ? 'bar hide' : 'bar';
+    $('backBtn').style.display = n === 1 ? 'none' : '';
+    var nx = $('nextBtn');
+    nx.disabled = false;
+    nx.innerHTML = n === 3 ? '\u0e22\u0e37\u0e19\u0e22\u0e31\u0e19\u0e01\u0e32\u0e23\u0e08\u0e2d\u0e07 \u2713' : '\u0e16\u0e31\u0e14\u0e44\u0e1b &rarr;';
+    if (n === 2) renderStep2();
+    if (n === 3) renderStep3();
+    renderHeader();
+    window.scrollTo(0, 0);
+  }
+
+  function renderStep2() {
+    $('modeYes').className = 'mode' + (S.preorder === true ? ' on' : '');
+    $('modeNo').className = 'mode' + (S.preorder === false ? ' on' : '');
+    $('menuBox').className = S.preorder === true ? '' : 'hide';
+    $('modeCard').className = 'card gold' + (S.preorder === true ? ' compact' : '');
+    var mn = minSpend();
+    $('minNotice').innerHTML = '\u0e01\u0e32\u0e23\u0e08\u0e2d\u0e07\u0e21\u0e35<b>\u0e22\u0e2d\u0e14\u0e2a\u0e31\u0e48\u0e07\u0e02\u0e31\u0e49\u0e19\u0e15\u0e48\u0e33 ' + money(mn) + '</b> (' + (S.guests <= 2 ? '1-2' : '3 \u0e17\u0e48\u0e32\u0e19\u0e02\u0e36\u0e49\u0e19\u0e44\u0e1b') + ' \u0e17\u0e48\u0e32\u0e19: ' + (S.guests <= 2 ? '300' : '500') + ' \u0e1a\u0e32\u0e17) \u0e0a\u0e33\u0e23\u0e30\u0e17\u0e35\u0e48\u0e23\u0e49\u0e32\u0e19<br><span class="sub">Minimum spend ' + money(mn) + ' \u2013 300 THB for 1-2 guests, 500 THB for 3+, paid at the restaurant.</span>';
+    if (S.preorder === true) { $('minNotice').innerHTML += '<br>\u0e2a\u0e31\u0e48\u0e07\u0e25\u0e48\u0e27\u0e07\u0e2b\u0e19\u0e49\u0e32\u0e44\u0e14\u0e49\u0e16\u0e36\u0e07\u0e02\u0e31\u0e49\u0e19\u0e15\u0e48\u0e33\u0e41\u0e25\u0e49\u0e27\u0e14\u0e39\u0e41\u0e16\u0e1a\u0e14\u0e49\u0e32\u0e19\u0e1a\u0e19'; }
+  }
+
+  function renderStep3() {
+    var z = zoneObj(S.zone), t = tablesFor(S.guests), rows = [];
+    rows.push(['\u0e0a\u0e37\u0e48\u0e2d', esc(val('fName'))], ['\u0e42\u0e17\u0e23', esc(val('fPhone'))]);
+    rows.push(['\u0e27\u0e31\u0e19\u0e17\u0e35\u0e48', esc(dateLong(S.iso))], ['\u0e23\u0e2d\u0e1a\u0e40\u0e27\u0e25\u0e32', esc(S.slot)]);
+    rows.push(['\u0e08\u0e33\u0e19\u0e27\u0e19', S.guests + ' \u0e17\u0e48\u0e32\u0e19' + (!z || z.unit === 'tables' ? ' (~' + t + ' \u0e42\u0e15\u0e4a\u0e30)' : '')], ['\u0e42\u0e0b\u0e19', esc(z ? z.label : '-')]);
+    if (val('fSpecial')) rows.push(['\u0e04\u0e27\u0e32\u0e21\u0e15\u0e49\u0e2d\u0e07\u0e01\u0e32\u0e23\u0e1e\u0e34\u0e40\u0e28\u0e29', esc(val('fSpecial'))]);
+    $('sumBox').innerHTML = rows.map(function (r) { return '<div class="row"><span>' + r[0] + '</span><b>' + r[1] + '</b></div>'; }).join('');
+    var pre = S.preorder === true;
+    $('orderCard').className = pre ? 'card' : 'card hide';
+    $('depCard').className = pre ? 'card' : 'card hide';
+    $('noDepCard').className = pre ? 'card hide' : 'card';
+    if (pre) {
+      var ids = Object.keys(S.cart);
+      $('orderBox').innerHTML = ids.map(function (id) { var it = ITEMS[id], q = S.cart[id]; return '<div class="row"><span style="color:var(--text)">' + esc(it.th) + ' x ' + q + '</span><b>' + money(q * it.price) + '</b></div>'; }).join('') +
+        '<div class="total"><span>\u0e22\u0e2d\u0e14\u0e2d\u0e32\u0e2b\u0e32\u0e23\u0e23\u0e27\u0e21</span><b>' + money(foodTotal()) + '</b></div>';
+      var lo = t * B.depositPerTable[0], hi = t * B.depositPerTable[1];
+      $('depInfo').innerHTML = '\u0e04\u0e48\u0e32\u0e21\u0e31\u0e14\u0e08\u0e33 <b>' + B.depositPerTable[0] + '-' + B.depositPerTable[1] + ' \u0e1a\u0e32\u0e17\u0e15\u0e48\u0e2d\u0e42\u0e15\u0e4a\u0e30</b> (\u0e1b\u0e23\u0e30\u0e21\u0e32\u0e13 ' + money(lo) + '-' + money(hi) + ' \u0e2a\u0e33\u0e2b\u0e23\u0e31\u0e1a ' + t + ' \u0e42\u0e15\u0e4a\u0e30) \u0e17\u0e35\u0e21\u0e07\u0e32\u0e19\u0e08\u0e30\u0e22\u0e37\u0e19\u0e22\u0e31\u0e19\u0e22\u0e2d\u0e14\u0e17\u0e35\u0e48\u0e41\u0e19\u0e48\u0e19\u0e2d\u0e19<br><span class="sub">Deposit is 300-500 THB per table; our staff will confirm the exact amount.</span>';
+      if (!$('fAmount').value) $('fAmount').placeholder = String(lo);
+      loadQr();
+    } else {
+      $('noDepInfo').innerHTML = '\u0e44\u0e21\u0e48\u0e2a\u0e31\u0e48\u0e07\u0e2d\u0e32\u0e2b\u0e32\u0e23\u0e25\u0e48\u0e27\u0e07\u0e2b\u0e19\u0e49\u0e32 \u0e44\u0e21\u0e48\u0e15\u0e49\u0e2d\u0e07\u0e21\u0e31\u0e14\u0e08\u0e33<br>\u0e22\u0e2d\u0e14\u0e2a\u0e31\u0e48\u0e07\u0e02\u0e31\u0e49\u0e19\u0e15\u0e48\u0e33 <b>' + money(minSpend()) + '</b> \u0e0a\u0e33\u0e23\u0e30\u0e17\u0e35\u0e48\u0e23\u0e49\u0e32\u0e19<br><span class="sub">No pre-order, no deposit. Minimum spend ' + money(minSpend()) + ' paid at the restaurant.</span>';
+    }
+    $('submitErr').className = 'banner bad';
+  }
+
+  function loadQr() {
+    if (S.qr) { $('qrBox').className = ''; $('qrBox').innerHTML = '<img class="qr" alt="PromptPay QR" src="' + S.qr + '">'; return; }
+    run('webGetQr', [], function (u) {
+      if (u) { S.qr = u; $('qrBox').className = ''; $('qrBox').innerHTML = '<img class="qr" alt="PromptPay QR" src="' + u + '">'; }
+      else $('qrBox').innerHTML = '\u0e44\u0e21\u0e48\u0e1e\u0e1a QR \u0e01\u0e23\u0e38\u0e13\u0e32\u0e15\u0e34\u0e14\u0e15\u0e48\u0e2d\u0e23\u0e49\u0e32\u0e19';
+    }, function () { $('qrBox').innerHTML = '\u0e42\u0e2b\u0e25\u0e14 QR \u0e44\u0e21\u0e48\u0e2a\u0e33\u0e40\u0e23\u0e47\u0e08 \u0e01\u0e23\u0e38\u0e13\u0e32\u0e25\u0e2d\u0e07\u0e43\u0e2b\u0e21\u0e48'; });
+  }
+
+  /* ---------- validation / submit ---------- */
+  function val(id) { return ($(id).value || '').trim(); }
+  function setErr(id, msg) { var e = $(id); e.textContent = msg || ''; e.className = 'err' + (msg ? ' show' : ''); return !!msg; }
+  function validate1() {
+    var bad = '';
+    function mark(id, el, msg) { if (setErr(id, msg) && !bad) bad = el; }
+    mark('eName', 'fName', val('fName').length < 2 ? '\u0e01\u0e23\u0e38\u0e13\u0e32\u0e01\u0e23\u0e2d\u0e01\u0e0a\u0e37\u0e48\u0e2d-\u0e19\u0e32\u0e21\u0e2a\u0e01\u0e38\u0e25' : '');
+    mark('ePhone', 'fPhone', /^0\d{9}$/.test(val('fPhone').replace(/[\s-]/g, '')) ? '' : '\u0e40\u0e1a\u0e2d\u0e23\u0e4c\u0e42\u0e17\u0e23\u0e15\u0e49\u0e2d\u0e07\u0e40\u0e1b\u0e47\u0e19\u0e15\u0e31\u0e27\u0e40\u0e25\u0e02 10 \u0e2b\u0e25\u0e31\u0e01 \u0e40\u0e0a\u0e48\u0e19 0812345678');
+    mark('eDate', 'dates', S.iso ? '' : '\u0e01\u0e23\u0e38\u0e13\u0e32\u0e40\u0e25\u0e37\u0e2d\u0e01\u0e27\u0e31\u0e19\u0e17\u0e35\u0e48');
+    mark('eSlot', 'slots', S.slot ? '' : '\u0e01\u0e23\u0e38\u0e13\u0e32\u0e40\u0e25\u0e37\u0e2d\u0e01\u0e23\u0e2d\u0e1a\u0e40\u0e27\u0e25\u0e32\u0e17\u0e35\u0e48\u0e27\u0e48\u0e32\u0e07');
+    mark('eGuests', 'fGuests', (S.guests >= 1 && S.guests <= B.maxGuests) ? '' : '\u0e08\u0e33\u0e19\u0e27\u0e19\u0e15\u0e49\u0e2d\u0e07\u0e2d\u0e22\u0e39\u0e48\u0e23\u0e30\u0e2b\u0e27\u0e48\u0e32\u0e07 1-' + B.maxGuests);
+    mark('eZone', 'zones', S.zone ? '' : '\u0e01\u0e23\u0e38\u0e13\u0e32\u0e40\u0e25\u0e37\u0e2d\u0e01\u0e42\u0e0b\u0e19\u0e17\u0e35\u0e48\u0e19\u0e31\u0e48\u0e07');
+    if (bad) { var el = $(bad); window.scrollTo({ top: el.getBoundingClientRect().top + window.pageYOffset - 150, behavior: 'smooth' }); }
+    return !bad;
+  }
+
+  function validate3() {
+    if (S.preorder !== true) return true;
+    var bad = false;
+    var a = Number(val('fAmount'));
+    bad = setErr('eAmount', (a > 0) ? '' : '\u0e01\u0e23\u0e38\u0e13\u0e32\u0e01\u0e23\u0e2d\u0e01\u0e22\u0e2d\u0e14\u0e17\u0e35\u0e48\u0e42\u0e2d\u0e19') || bad;
+    bad = setErr('eRef', val('fRef') ? '' : '\u0e01\u0e23\u0e38\u0e13\u0e32\u0e01\u0e23\u0e2d\u0e01\u0e40\u0e27\u0e25\u0e32\u0e42\u0e2d\u0e19\u0e41\u0e25\u0e30\u0e40\u0e25\u0e02\u0e2d\u0e49\u0e32\u0e07\u0e2d\u0e34\u0e07') || bad;
+    bad = setErr('eConfirm', $('fConfirm').checked ? '' : '\u0e01\u0e23\u0e38\u0e13\u0e32\u0e15\u0e34\u0e4a\u0e01\u0e22\u0e37\u0e19\u0e22\u0e31\u0e19\u0e01\u0e32\u0e23\u0e42\u0e2d\u0e19') || bad;
+    return !bad;
+  }
+
+  function payload() {
+    return {
+      branch: B.branch, name: val('fName'), phone: val('fPhone'), line: val('fLine'), iso: S.iso, slot: S.slot,
+      guests: S.guests, zone: S.zone, special: val('fSpecial'), preorder: S.preorder === true,
+      cart: S.preorder === true ? S.cart : {}, amount: val('fAmount'), reference: val('fRef'), confirm: $('fConfirm').checked, hp: val('fHp')
+    };
+  }
+
+  function submit() {
+    if (S.submitting || !validate3()) return;
+    S.submitting = true;
+    var nx = $('nextBtn'); nx.disabled = true; nx.innerHTML = '<span class="sp"></span>\u0e01\u0e33\u0e25\u0e31\u0e07\u0e2a\u0e48\u0e07...';
+    var eb = $('submitErr'); eb.className = 'banner bad';
+    run('webSubmitBooking', [payload()], function (r) {
+      S.submitting = false;
+      if (r && r.ok) return showDone(r);
+      nx.disabled = false; nx.innerHTML = '\u0e22\u0e37\u0e19\u0e22\u0e31\u0e19\u0e01\u0e32\u0e23\u0e08\u0e2d\u0e07 \u2713';
+      eb.textContent = (r && r.error) || '\u0e2a\u0e48\u0e07\u0e44\u0e21\u0e48\u0e2a\u0e33\u0e40\u0e23\u0e47\u0e08 \u0e01\u0e23\u0e38\u0e13\u0e32\u0e25\u0e2d\u0e07\u0e43\u0e2b\u0e21\u0e48'; eb.className = 'banner bad show';
+      fetchAvail(true);
+      eb.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }, function (msg) {
+      S.submitting = false;
+      nx.disabled = false; nx.innerHTML = '\u0e22\u0e37\u0e19\u0e22\u0e31\u0e19\u0e01\u0e32\u0e23\u0e08\u0e2d\u0e07 \u2713';
+      eb.textContent = '\u0e40\u0e0a\u0e37\u0e48\u0e2d\u0e21\u0e15\u0e48\u0e2d\u0e44\u0e21\u0e48\u0e44\u0e14\u0e49 \u0e01\u0e23\u0e38\u0e13\u0e32\u0e25\u0e2d\u0e07\u0e2d\u0e35\u0e01\u0e04\u0e23\u0e31\u0e49\u0e07 (' + msg + ')'; eb.className = 'banner bad show';
+    });
+  }
+
+  function showDone(r) {
+    $('doneCode').textContent = r.code;
+    var rows = [['\u0e2a\u0e32\u0e02\u0e32', r.branch], ['\u0e0a\u0e37\u0e48\u0e2d', r.name], ['\u0e27\u0e31\u0e19\u0e17\u0e35\u0e48', r.dmy], ['\u0e23\u0e2d\u0e1a\u0e40\u0e27\u0e25\u0e32', r.slot], ['\u0e42\u0e0b\u0e19', r.zone], ['\u0e08\u0e33\u0e19\u0e27\u0e19', r.guests + ' \u0e17\u0e48\u0e32\u0e19 (~' + r.tables + ' \u0e42\u0e15\u0e4a\u0e30)']];
+    var h = rows.map(function (x) { return '<div class="row"><span>' + x[0] + '</span><b>' + esc(x[1]) + '</b></div>'; }).join('');
+    if (r.preorder) {
+      h += r.lines.map(function (l) { return '<div class="row"><span style="color:var(--text)">' + esc(l.name) + ' x ' + l.qty + '</span><b>' + money(l.sub) + '</b></div>'; }).join('');
+      h += '<div class="total"><span>\u0e22\u0e2d\u0e14\u0e2d\u0e32\u0e2b\u0e32\u0e23\u0e23\u0e27\u0e21</span><b>' + money(r.foodTotal) + '</b></div><div class="row"><span>\u0e21\u0e31\u0e14\u0e08\u0e33\u0e17\u0e35\u0e48\u0e41\u0e08\u0e49\u0e07\u0e42\u0e2d\u0e19</span><b>' + money(r.amount) + '</b></div>';
+    }
+    $('doneBox').innerHTML = h;
+    $('doneNote').innerHTML = r.preorder ?
+      '<b>\u0e02\u0e31\u0e49\u0e19\u0e15\u0e48\u0e2d\u0e44\u0e1b:</b> \u0e2a\u0e48\u0e07\u0e2a\u0e25\u0e34\u0e1b\u0e42\u0e2d\u0e19\u0e40\u0e07\u0e34\u0e19\u0e43\u0e2b\u0e49\u0e23\u0e49\u0e32\u0e19\u0e17\u0e32\u0e07 LINE \u0e1e\u0e23\u0e49\u0e2d\u0e21\u0e23\u0e2b\u0e31\u0e2a\u0e01\u0e32\u0e23\u0e08\u0e2d\u0e07 \u0e17\u0e35\u0e21\u0e07\u0e32\u0e19\u0e08\u0e30\u0e15\u0e23\u0e27\u0e08\u0e2a\u0e2d\u0e1a\u0e41\u0e25\u0e30\u0e15\u0e34\u0e14\u0e15\u0e48\u0e2d\u0e01\u0e25\u0e31\u0e1a\u0e40\u0e1e\u0e37\u0e48\u0e2d\u0e22\u0e37\u0e19\u0e22\u0e31\u0e19<br><span class="sub">Please send your transfer slip on LINE with your booking code. Our team will confirm.</span>' :
+      '<b>\u0e02\u0e31\u0e49\u0e19\u0e15\u0e48\u0e2d\u0e44\u0e1b:</b> \u0e17\u0e35\u0e21\u0e07\u0e32\u0e19\u0e08\u0e30\u0e15\u0e34\u0e14\u0e15\u0e48\u0e2d\u0e01\u0e25\u0e31\u0e1a\u0e40\u0e1e\u0e37\u0e48\u0e2d\u0e22\u0e37\u0e19\u0e22\u0e31\u0e19 \u0e22\u0e2d\u0e14\u0e2a\u0e31\u0e48\u0e07\u0e02\u0e31\u0e49\u0e19\u0e15\u0e48\u0e33 ' + money(r.minSpend) + ' \u0e0a\u0e33\u0e23\u0e30\u0e17\u0e35\u0e48\u0e23\u0e49\u0e32\u0e19<br><span class="sub">Our team will contact you to confirm. Minimum spend ' + money(r.minSpend) + ' paid at the restaurant.</span>';
+    showStep(4);
+    $('prog').className = 'prog';
+  }
+
+  /* ---------- events ---------- */
+  function onNext() {
+    if (S.step === 1) { if (validate1()) showStep(2); return; }
+    if (S.step === 2) {
+      if (S.preorder === null) { $('minNotice').scrollIntoView({ behavior: 'smooth', block: 'center' }); return; }
+      if (S.preorder === true && foodTotal() <= 0) { $('fSearch').scrollIntoView({ behavior: 'smooth', block: 'center' }); alertBar('\u0e01\u0e23\u0e38\u0e13\u0e32\u0e40\u0e25\u0e37\u0e2d\u0e01\u0e2d\u0e32\u0e2b\u0e32\u0e23\u0e2d\u0e22\u0e48\u0e32\u0e07\u0e19\u0e49\u0e2d\u0e22 1 \u0e23\u0e32\u0e22\u0e01\u0e32\u0e23 \u0e2b\u0e23\u0e37\u0e2d\u0e40\u0e25\u0e37\u0e2d\u0e01 "\u0e44\u0e21\u0e48\u0e2a\u0e31\u0e48\u0e07\u0e2d\u0e32\u0e2b\u0e32\u0e23\u0e25\u0e48\u0e27\u0e07\u0e2b\u0e19\u0e49\u0e32"'); return; }
+      showStep(3); return;
+    }
+    if (S.step === 3) submit();
+  }
+  function alertBar(msg) {
+    var b = $('nextBtn'), old = b.innerHTML; b.innerHTML = msg; b.disabled = true;
+    setTimeout(function () { b.innerHTML = old; b.disabled = false; }, 2600);
+  }
+
+  function bind() {
+    $('nextBtn').onclick = onNext;
+    $('backBtn').onclick = function () { if (S.step > 1) showStep(S.step - 1); };
+    $('againBtn').onclick = function () { location.reload(); };
+    $('cartBtn').onclick = function () { showSheet(true); };
+    $('sheetX').onclick = $('sheetOk').onclick = $('ov').onclick = function () { showSheet(false); };
+    $('dates').onclick = function (e) {
+      var d = e.target.closest('.day'); if (!d || d.classList.contains('full')) return;
+      S.iso = d.getAttribute('data-iso'); S.slot = ''; if (B.zones.length > 1) S.zone = '';
+      setErr('eDate', ''); renderStats(); fetchAvail();
+    };
+    $('slots').onclick = function (e) {
+      if (e.target.id === 'retry') { e.preventDefault(); fetchAvail(); return; }
+      var s = e.target.closest('.opt'); if (!s || s.classList.contains('dis')) return;
+      S.slot = s.getAttribute('data-slot'); if (B.zones.length > 1) S.zone = '';
+      setErr('eSlot', ''); renderSlots(); renderZones(); renderStats();
+    };
+    $('zones').onclick = function (e) {
+      var z = e.target.closest('.opt'); if (!z || z.classList.contains('dis')) return;
+      S.zone = z.getAttribute('data-zone'); setErr('eZone', ''); renderZones(); renderStats();
+    };
+    var gt;
+    function setGuests(n) {
+      n = Math.max(1, Math.min(B.maxGuests, Math.floor(n) || 1));
+      $('fGuests').value = n;
+      if (n === S.guests) return;
+      S.guests = n; renderGuestHint(); renderStats(); renderHeader(); setErr('eGuests', '');
+      clearTimeout(gt); gt = setTimeout(function () { fetchAvail(); }, 350);
+    }
+    $('gMinus').onclick = function () { setGuests(S.guests - 1); };
+    $('gPlus').onclick = function () { setGuests(S.guests + 1); };
+    $('fGuests').onchange = function () { setGuests(Number($('fGuests').value)); };
+    $('fGuests').max = B.maxGuests;
+    $('modeYes').onclick = function () { S.preorder = true; renderStep2(); renderHeader(); };
+    $('modeNo').onclick = function () { S.preorder = false; renderStep2(); renderHeader(); };
+    $('fSearch').oninput = function () { S.q = $('fSearch').value; applySearch(); };
+    $('tabs').onclick = function (e) { var t = e.target.closest('.tab'); if (t) openCat(t.getAttribute('data-cat'), true); };
+    $('menu').onclick = function (e) {
+      var h = e.target.closest('.cat-h');
+      if (h) { var c = h.parentNode; c.classList.toggle('open'); if (c.classList.contains('open')) openCat(c.getAttribute('data-cat'), false); return; }
+      stepClick(e);
+    };
+    $('sheetB').onclick = stepClick;
+    function stepClick(e) {
+      var b = e.target.closest('button[data-act]'); if (!b) return;
+      var row = b.closest('.item'), id = row.getAttribute('data-id'), q = S.cart[id] || 0;
+      setQty(id, b.getAttribute('data-act') === 'inc' ? q + 1 : q - 1);
+    }
+    ['fName', 'fPhone', 'fLine'].forEach(function (id) { $(id).addEventListener('input', function () { setErr({ fName: 'eName', fPhone: 'ePhone' }[id] || 'eName', ''); }); });
+  }
+
+  function init() {
+    renderInfoChips(); renderGuestHint(); buildMenu(); bind();
+    renderStats(); renderHeader(); showStep(1);
+    fetchAvail();
+  }
+  window.__MANA = { S: S, B: B, go: showStep, setQty: setQty, openCat: openCat, renderStep3: renderStep3, showSheet: showSheet, fetchAvail: fetchAvail, setGuests: function (n) { $('fGuests').value = n; $('fGuests').onchange(); }, applySearch: applySearch };
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,69 @@
+# Mana Booking — หน้าเว็บจองโต๊ะ + สั่งอาหารล่วงหน้า (Mana Garden / Mana Ratchayothin)
+
+เว็บหน้าเดียว (static) โฮสต์บน **GitHub Pages** ดีไซน์ Dark Luxe (เขียวเข้ม/ดำ + ทอง) ใช้บนมือถือเป็นหลัก
+หลังบ้านคือ **Google Apps Script Web App** ที่ทำหน้าที่เป็น JSON API: ตรวจรอบว่าง, ล็อกคิวกันจองซ้ำ,
+เขียนลงชีต Master Database, และส่ง LINE แจ้งทีมงาน (ฟอร์ม Google เดิมยังใช้งานได้ตามปกติ)
+
+| สาขา | ลิงก์ |
+|---|---|
+| Mana Garden | https://khatawutt.github.io/mana-booking/ |
+| Mana Ratchayothin | https://khatawutt.github.io/mana-booking/?b=ratch |
+
+## โครงสร้าง
+
+```
+index.html              หน้าเว็บทั้งหมด (HTML + CSS + JS) — ค่า API_URL อยู่บนสุดของสคริปต์
+data/garden.json        เมนู + ตั้งค่าสาขา Mana Garden (16 หมวด 139 รายการ)
+data/ratch.json         เมนู + ตั้งค่าสาขา Mana Ratchayothin (20 หมวด 165 รายการ)
+assets/mana-qr.jpg      QR พร้อมเพย์สำหรับโอนมัดจำ
+backend/                โค้ด Google Apps Script (ไม่มี token/รหัสลับใดๆ)
+  WebApp.gs             doGet/API, ตรวจข้อมูล, ล็อก, เขียนชีต, ส่ง LINE, rate-limit
+  WebMenuData.gs        เมนู+ราคาฝั่งเซิร์ฟเวอร์ (สร้างจาก data/*.json — ห้ามแก้มือ)
+  WebQr.gs              QR แบบ base64 (ใช้กับหน้าเว็บเก่าใน Apps Script เท่านั้น)
+  Index.html            หน้าเว็บเก่าแบบ Apps Script (ยังใช้ได้ ลิงก์เดิมไม่เสีย)
+  Ratchayothin_doPost_patch.md   วิธีแก้ doPost 5 บรรทัด
+tools/build_backend_menu.py      data/*.json -> backend/WebMenuData.gs
+```
+
+## ความปลอดภัย
+
+* รีโปนี้เป็น **public** (GitHub Pages แพ็กเกจฟรีต้องเป็น public) ห้ามใส่ token / รหัสลับ
+  `LINE_CHANNEL_ACCESS_TOKEN`, `TARGET_GROUP_ID`, `RT_SHEET_ID` ฯลฯ อยู่ใน **Script Properties** ของ Apps Script เท่านั้น
+* เซิร์ฟเวอร์ไม่เชื่อราคา/ยอดรวมจากหน้าเว็บ: รับแค่รหัสเมนูกับจำนวน แล้วคำนวณยอดอาหารและขั้นต่ำใหม่เองจาก `WebMenuData.gs`
+* ตรวจความจุซ้ำภายใน `LockService` (กันจองชนกัน), กันสูตรชีต (`= + - @`), ช่อง honeypot,
+  กันกดซ้ำ 5 นาที, และ rate-limit ด้วย CacheService (ต่อเบอร์โทร 5 ครั้ง/10 นาที, รวมทุกคน 20 การจอง/นาที)
+
+## วิธีแก้เมนู / ราคา
+
+1. แก้ `data/garden.json` หรือ `data/ratch.json` (รูปแบบรายการ: `["รหัส","ชื่อไทย","ชื่ออังกฤษ","ชื่อจีน",ราคา]`
+   — รหัสต้องไม่ซ้ำ ห้ามเปลี่ยนรหัสของรายการเดิมถ้าไม่จำเป็น)
+2. รัน `python3 tools/build_backend_menu.py` (สร้าง `backend/WebMenuData.gs` และอัปเดต `menuVersion`)
+3. commit + push → หน้าเว็บอัปเดตเอง (รอ 1–2 นาที)
+4. เปิด Apps Script วางเนื้อหา `backend/WebMenuData.gs` ทับไฟล์ `WebMenuData` แล้ว Deploy เวอร์ชันใหม่
+   (ราคาที่ใช้คิดเงินจริงคือฝั่ง Apps Script ถ้าสองฝั่งไม่ตรง หน้าเว็บจะขึ้นแถบเตือนให้โหลดใหม่)
+
+## วิธี deploy หลังบ้าน (Apps Script)
+
+ไฟล์ในโปรเจกต์ Apps Script (วางด้วยการ copy-paste):
+
+| ไฟล์ในโปรเจกต์ | เนื้อหา |
+|---|---|
+| `WebMenuData` (Script) | `backend/WebMenuData.gs` |
+| `WebQr` (Script) | `backend/WebQr.gs` |
+| `WebApp` (Script) | `backend/WebApp.gs` |
+| `Index` (HTML) | `backend/Index.html` (เฉพาะหน้าเก่า — ไม่จำเป็นสำหรับ API) |
+| `Ratchayothin` (Script) | ไฟล์เดิม แก้ `doPost` ตาม `backend/Ratchayothin_doPost_patch.md` |
+
+Deploy → **Manage deployments → Edit (ดินสอ) → Version: New version → Deploy** (URL เดิมไม่เปลี่ยน)
+ตั้งค่า: Execute as **Me**, Who has access **Anyone**
+
+ทดสอบ: เปิด `<API_URL>?api=ping` ต้องได้ JSON `{"ok":true,...}`
+
+ถ้าเปลี่ยน URL ของ Web App ให้แก้ค่า `API_URL` บนสุดของสคริปต์ใน `index.html`
+
+## หมายเหตุ
+
+* หน้าเว็บเรียก API แบบ "simple CORS request": ตรวจรอบว่างด้วย GET, ส่งการจองด้วย POST `Content-Type: text/plain`
+  (ไม่มี preflight) Apps Script จะ redirect ไปยัง googleusercontent ซึ่งเบราว์เซอร์ตามให้เอง
+* ถ้าส่งการจองแล้วเน็ตหลุด ลูกค้ากด "ยืนยันการจอง" ซ้ำได้ เซิร์ฟเวอร์จะคืนรหัสเดิม ไม่สร้างแถวซ้ำ
+* ฟอนต์ Prompt โหลดจาก Google Fonts (ถ้าโหลดไม่ได้ใช้ฟอนต์สำรองของเครื่อง)
