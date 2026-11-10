@@ -2,197 +2,25 @@
 <html lang="th">
 <head>
 <meta charset="utf-8">
-<base href="../">
-<script>window.MANA_DEFAULT_BRANCH = 'ratch';</script>
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#ffffff">
-<title>Mana Ratchayothin | จองโต๊ะ &amp; สั่งอาหาร</title>
-<meta name="description" content="จองโต๊ะและสั่งอาหารล่วงหน้า Mana Ratchayothin Cafe\' &amp; Restaurant / Book a table and pre-order food online">
-<meta property="og:type" content="website">
-<meta property="og:site_name" content="MANA">
-<meta property="og:title" content="Mana Ratchayothin | จองโต๊ะ &amp; สั่งอาหาร">
-<meta property="og:description" content="จองโต๊ะและสั่งอาหารล่วงหน้า / Book a table and pre-order food online">
-<meta property="og:image" content="https://khatawutt.github.io/mana-booking/assets/og-ratch.png">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
-<meta name="twitter:card" content="summary_large_image">
-<link rel="icon" type="image/png" href="assets/favicon-ratch.png">
-<link rel="apple-touch-icon" href="assets/apple-touch-ratch.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+Thai:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/app.css?v=4">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>กำลังพาไปหน้าจอง Mana Ratchayothin...</title>
+<link rel="canonical" href="https://mana-booking.vercel.app/ratchayothin/">
+<script>
+(function () {
+  var dest = 'https://mana-booking.vercel.app/ratchayothin/';
+  var target = dest + (location.search || '') + (location.hash || '');
+  document.addEventListener('DOMContentLoaded', function () {
+    var link = document.getElementById('redirect-link');
+    if (link) link.href = target;
+  });
+  try { location.replace(target); } catch (e) {}
+})();
+</script>
+<noscript>
+<meta http-equiv="refresh" content="0;url=https://mana-booking.vercel.app/ratchayothin/">
+</noscript>
 </head>
 <body>
-<div class="top"><div class="top-in">
-  <div class="top-row">
-    <div class="brandbox"><span class="markbadge"><img class="mark" id="markImg" alt="" width="30" height="30"></span><div class="brand" id="brand">MANA<small id="brandSub"></small></div></div>
-    <button class="cartbtn" id="cartBtn" type="button" aria-label="ดูตะกร้า"><span>ดูตะกร้า</span><span class="cnt" id="cartCnt">0</span><b id="cartTotal">฿0</b></button>
-  </div>
-  <div class="steps" id="steps"><div data-s="1"><i>1</i><span>จองโต๊ะ</span></div><div data-s="2"><i>2</i><span>อาหาร</span></div><div data-s="3"><i>3</i><span>ยืนยัน</span></div></div>
-  <div class="prog" id="prog"><div class="pbar"><i id="progBar"></i></div><div class="txt"><span id="progL"></span><span id="progR"></span></div></div>
-</div></div>
-
-<div class="bootmsg" id="boot"><div class="logobadge small"><img id="bootLogo" alt="MANA" src="assets/logo-ratch.webp"></div><div><span class="sp"></span><span id="bootTxt">กำลังโหลด... / Loading...</span></div><button type="button" id="bootRetry" class="hide">ลองใหม่ / Retry</button></div>
-
-<script>
-(function(){var q=(new URLSearchParams(location.search).get('b')||window.MANA_DEFAULT_BRANCH||'').toLowerCase();
-if(q==='ratch'||q==='ratchayothin'){var i=document.getElementById('bootLogo');if(i)i.src='assets/logo-ratch.webp';}})();
-</script>
-
-<div class="wrap" id="app">
-  <div class="banner bad" id="verBanner">เมนูมีการอัปเดต กรุณารีเฟรชหน้านี้ (ดึงลงเพื่อโหลดใหม่) ก่อนสั่งอาหาร / The menu was updated, please reload this page before ordering.</div>
-
-<!-- STEP 1 -->
-<section id="s1">
-  <div class="card gold hero">
-    <div class="logobadge"><img class="logo" id="logoHero" alt="MANA" width="250" height="198"></div>
-    <div class="eyebrow" id="eyebrow">MANA</div>
-    <h1>จองโต๊ะ &amp; สั่งอาหารล่วงหน้า</h1>
-    <div class="sub">เลือกวัน เวลา และจำนวนผู้ใช้บริการ ระบบแสดงเฉพาะรอบที่ยังว่างแบบเรียลไทม์<br>Choose date, time and party size. Only live availability is shown.</div>
-    <div class="chips" id="infoChips"></div>
-    <div class="stats">
-      <div class="stat hl"><span>วันที่</span><b id="stDate">-</b></div>
-      <div class="stat"><span>รอบเวลา</span><b id="stSlot">-</b></div>
-      <div class="stat"><span>ผู้ใช้บริการ</span><b id="stGuests">-</b></div>
-      <div class="stat"><span id="stUnitL">โต๊ะที่ใช้</span><b id="stUnit">-</b></div>
-    </div>
-  </div>
-
-  <div class="card">
-    <h2>ข้อมูลผู้จอง <span class="sub">Your details</span></h2>
-    <label class="f" for="fName">ชื่อ-นามสกุล / Full name <em>*</em></label>
-    <input type="text" id="fName" autocomplete="name" maxlength="80" placeholder="เช่น สมชาย ใจดี">
-    <div class="err" id="eName"></div>
-    <label class="f" for="fPhone">เบอร์โทรศัพท์ / Phone <em>*</em></label>
-    <input type="tel" id="fPhone" inputmode="numeric" autocomplete="tel" maxlength="14" placeholder="0812345678">
-    <div class="err" id="ePhone"></div>
-    <label class="f" for="fLine">LINE ID (ไม่บังคับ / optional)</label>
-    <input type="text" id="fLine" maxlength="60" autocomplete="off">
-    <div class="hp"><label>Website <input type="text" id="fHp" tabindex="-1" autocomplete="off"></label></div>
-  </div>
-
-  <div class="card">
-    <h2>วันที่ &amp; รอบเวลา <span class="sub">Date &amp; time</span></h2>
-    <div class="dates" id="dates"></div>
-    <div class="err" id="eDate"></div>
-    <div class="sub" style="margin:2px 0 8px">รอบเวลา / Time slot</div>
-    <div class="grid slots" id="slots"></div>
-    <div class="err" id="eSlot"></div>
-  </div>
-
-  <div class="card">
-    <h2>จำนวนผู้ใช้บริการ <span class="sub">Guests</span></h2>
-    <div class="gst">
-      <button type="button" class="rbtn" id="gMinus" aria-label="ลด">&minus;</button>
-      <input type="number" id="fGuests" inputmode="numeric" min="1" value="2">
-      <button type="button" class="rbtn plus" id="gPlus" aria-label="เพิ่ม">+</button>
-    </div>
-    <div class="hint" id="gHint"></div>
-    <div class="err" id="eGuests"></div>
-    <h2 style="margin-top:18px">โซนที่นั่ง <span class="sub">Seating zone</span></h2>
-    <div class="grid" id="zones"></div>
-    <div class="err" id="eZone"></div>
-    <label class="f" for="fSpecial">ความต้องการพิเศษ / Special requests</label>
-    <textarea id="fSpecial" maxlength="500" placeholder="เช่น เก้าอี้เด็ก, ฉลองวันเกิด"></textarea>
-  </div>
-</section>
-
-<!-- STEP 2 -->
-<section id="s2" class="hide">
-  <div class="card gold" id="modeCard">
-    <div class="modehead"><div class="eyebrow">อาหาร / Food</div>
-    <h1 style="font-size:22px">สั่งอาหารล่วงหน้าหรือไม่?</h1>
-    <div class="sub">Pre-order food?</div></div>
-    <div class="modes" style="margin-top:12px">
-      <button type="button" class="mode" id="modeYes"><b>สั่งอาหารล่วงหน้า (ชำระมัดจำ)</b><span>เลือกเมนูได้เลย อาหารพร้อมเมื่อมาถึง &middot; ต้องโอนมัดจำ / Pre-order, deposit required</span></button>
-      <button type="button" class="mode" id="modeNo"><b>ไม่สั่งอาหารล่วงหน้า</b><span>สั่งที่ร้านได้ ไม่ต้องมัดจำ / Order at the restaurant, no deposit</span></button>
-    </div>
-    <div class="notice" id="minNotice"></div>
-  </div>
-  <div id="menuBox" class="hide">
-    <div class="menu-head" id="menuHead">
-      <h1 class="mh">FOOD MENU</h1>
-      <div class="mh-sub" id="mhSub"></div>
-      <button type="button" class="fullmenu" id="fullMenu"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z"/><path d="M4 19V5M9 7h6"/></svg>Full Menu</button>
-      <hr class="goldline">
-    </div>
-    <div class="seg" id="seg" role="tablist" aria-label="อาหาร / เครื่องดื่ม">
-      <button type="button" class="on" id="segFood" data-sec="food" role="tab" aria-selected="true"><span class="sg-ico" aria-hidden="true">&#127869;</span><b>อาหาร</b><small>Food</small><i class="sg-n hide">0</i></button>
-      <button type="button" id="segDrink" data-sec="drink" role="tab" aria-selected="false"><span class="sg-ico" aria-hidden="true">&#129380;</span><b>เครื่องดื่ม</b><small>Drinks</small><i class="sg-n hide">0</i></button>
-    </div>
-    <div class="search"><input type="text" id="fSearch" placeholder="ค้นหาเมนู / Search menu..." autocomplete="off" enterkeyhint="search"></div>
-    <div class="tabwrap"><div class="tabs" id="tabs"></div><button type="button" class="tabnext" id="tabNext" aria-label="เลื่อนหมวดถัดไป">&rsaquo;</button></div>
-    <div id="menu"></div>
-    <div class="empty hide" id="noRes">ไม่พบเมนูที่ค้นหา / No results</div>
-  </div>
-</section>
-
-<!-- STEP 3 -->
-<section id="s3" class="hide">
-  <div class="card gold">
-    <div class="eyebrow">ตรวจสอบ &amp; ยืนยัน</div>
-    <h1 style="font-size:22px">สรุปการจอง</h1>
-    <div id="sumBox" style="margin-top:8px"></div>
-  </div>
-  <div class="card" id="orderCard">
-    <h2>รายการอาหาร <span class="sub">Your order</span></h2>
-    <div id="orderBox"></div>
-  </div>
-  <div class="card" id="depCard">
-    <h2>ชำระมัดจำ <span class="sub">Deposit by QR</span></h2>
-    <div class="notice" id="depInfo"></div>
-    <div id="qrBox" class="qrph"><span class="sp"></span>กำลังโหลด QR...</div>
-    <div class="sub center">ชื่อบัญชี: MANA (อลิษา ใบกว้าง) &middot; รับเงินได้จากทุกธนาคาร</div>
-    <label class="f" for="fAmount">ยอดที่โอน / Amount transferred (THB) <em>*</em></label>
-    <input type="number" id="fAmount" inputmode="decimal" min="1" placeholder="0">
-    <div class="err" id="eAmount"></div>
-    <label class="f" for="fRef">เวลาที่โอนและเลขอ้างอิงรายการ / Transfer time &amp; ref no. <em>*</em></label>
-    <input type="text" id="fRef" maxlength="120" placeholder="เช่น 14:05 / 0123456789">
-    <div class="err" id="eRef"></div>
-    <label class="chk"><input type="checkbox" id="fConfirm"><span>ฉันได้โอนเงินมัดจำแล้ว / I have transferred the deposit</span></label>
-    <div class="err" id="eConfirm"></div>
-    <div class="notice" style="margin-top:12px">หลังส่งการจอง กรุณาส่งสลิปโอนเงินให้ร้านทาง LINE เพื่อยืนยัน<br>After booking, please send your transfer slip to us on LINE.</div>
-  </div>
-  <div class="card hide" id="noDepCard">
-    <h2>ไม่ต้องมัดจำ <span class="sub">No deposit</span></h2>
-    <div class="notice" id="noDepInfo"></div>
-  </div>
-  <div class="banner bad" id="submitErr"></div>
-</section>
-
-<!-- SUCCESS -->
-<section id="done" class="hide">
-  <div class="card gold center">
-    <div class="logobadge small"><img class="logo small" id="logoDone" alt="MANA" width="190" height="150"></div>
-    <div class="ok-mark">&#10003;</div>
-    <h1 style="font-size:23px">ส่งการจองเรียบร้อย</h1>
-    <div class="sub">Booking received</div>
-    <div class="code" id="doneCode"></div>
-    <div class="sub">รหัสการจอง / Booking code</div>
-  </div>
-  <div class="card"><div id="doneBox"></div></div>
-  <div class="card" id="doneNote"></div>
-  <button class="btn" type="button" id="againBtn" style="width:100%">จองใหม่ / New booking</button>
-</section>
-
-</div>
-
-<div class="bar" id="bar">
-<div class="cartbar" id="cartBar" role="button" tabindex="0" aria-label="ดูตะกร้า"><span id="cbText">0 รายการ</span><b id="cbTotal">฿0</b><em>ดูตะกร้า &rsaquo;</em></div>
-<div class="bar-in">
-  <button class="btn ghost" id="backBtn" type="button">&larr; ย้อนกลับ</button>
-  <button class="btn gold" id="nextBtn" type="button">ถัดไป &rarr;</button>
-</div></div>
-
-<div class="ov" id="ov"></div>
-<div class="sheet" id="sheet">
-  <div class="sheet-h"><span>ตะกร้าของคุณ / Your cart</span><button class="x" id="sheetX" type="button" aria-label="ปิด">&times;</button></div>
-  <div class="sheet-b" id="sheetB"></div>
-  <div class="sheet-f"><div class="total"><span>รวมทั้งหมด</span><b id="sheetTotal">฿0</b></div><button class="btn gold" id="sheetOk" type="button" style="width:100%;margin-top:10px">ตกลง</button></div>
-</div>
-
-<script src="js/config.js?v=4"></script>
-<script src="js/app.js?v=4"></script>
+  <p>กำลังพาไปหน้าจอง Mana Ratchayothin... <a id="redirect-link" href="https://mana-booking.vercel.app/ratchayothin/">คลิกที่นี่หากไม่ถูกพาไปอัตโนมัติ</a></p>
 </body>
 </html>
